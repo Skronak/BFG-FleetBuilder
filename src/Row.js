@@ -1,24 +1,31 @@
 import React, { useState } from "react";
+import data from './navy.json';
+
 import "./Row.css";
 
 function Row({ todo, remove, update, toggleComplete }) {
+
   const [isEditing, setIsEditing] = useState(false);
   const [task, setTask] = useState(todo.task);
 
   const handleClick = evt => {
     remove(evt.target.id);
   };
+
   const toggleFrom = () => {
     setIsEditing(!isEditing);
   };
+
   const handleUpdate = evt => {
     evt.preventDefault();
     update(todo.id, task);
     toggleFrom();
   };
+
   const handleChange = evt => {
     setTask(evt.target.value);
   };
+
   const toggleCompleted = evt => {
     toggleComplete(evt.target.id);
   };
@@ -28,7 +35,11 @@ function Row({ todo, remove, update, toggleComplete }) {
     result = (
       <div className="Todo">
         <form className="Todo-edit-form" onSubmit={handleUpdate}>
-          <input onChange={handleChange} value={task} type="text" />
+         <select value={task} onChange={handleChange}>
+         { data.map(ship =>
+            <option value={ship.name}>{ship.name}-{ship.stats.cost} pts</option>
+         )}
+         </select>
           <button>Save</button>
         </form>
       </div>

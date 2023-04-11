@@ -1,29 +1,36 @@
 [
   {
-    "key": "0201",
-    "name": "Mardi 2 janvier",
-    "label": "Coincée sur le toit de l'immeuble, une femme nue meurt de froid",
-    "guilty": 2,
-    "suspects": [
-      {
-        "role": "Appartement 25-A",
-        "context": "Son conjoint agent immobilier est arrivé à l'improviste pour une vente éclair de leur appartement"
-      },
-      {
-        "role": "Appartement 25-B",
-        "context": "Son conjoint commissaire est arrivé à l'improviste pour poser des caméras de surveillance"
-      },
-      {
-        "role": "Appartement 25-C",
-        "context": "Son conjoint pilote d'avion est arrvié à l'improviste pour une seconde lune de miel"
-      },
-      {
-        "role": "Appartement 25-D",
-        "context": "Son conjoint millionnaire du loto est arrivé à l'improviste pour un tour du monde"
-      },
-      {
-        "role": "Appartement 25-E",
-        "context": "Sa belle mère est arrivée à l'improviste pour se faire héberger pendant une petite semaine"
-      }
-    ]
-  }]
+    "key": "1",
+    "name": "Apocalypse",
+    "class": "Battleship",
+    "icon": "",
+    "stats": {
+      "hit": 12,
+      "speed": 15,
+      "turn": 45,
+      "shield": 4,
+      "armour_front": 6,
+      "armour_side": 5,
+      "armour_back": 5,
+      "turrets": 4,
+      "cost": 365
+    }
+  },
+  {
+    "key": "2",
+    "name": "Emperor",
+    "class": "Battleship",
+    "icon": "",
+    "stats": {
+      "hit": 12,
+      "speed": 15,
+      "turn": 45,
+      "shield": 4,
+      "armour_front": 5,
+      "armour_side": 5,
+      "armour_back": 5,
+      "turrets": 5,
+      "cost": 365
+    }
+  }
+]
