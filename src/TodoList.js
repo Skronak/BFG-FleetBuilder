@@ -6,7 +6,7 @@ import uuid from "uuid";
 import "./TodoList.css";
 import InputField from "./components/InputField"
 
-function TodoList() {
+function TodoList(props) {
   const [todos, setTodos] = useState([
     { id: uuid(), task: "task 1", completed: false },
     { id: uuid(), task: "task 2", completed: true }
@@ -52,9 +52,9 @@ function TodoList() {
   ));
 
   return (
-    <div className="TodoList">
+    <div className="">
       <h1>
-        Fleet List
+        Warband - {this.props.warband}
       </h1>
       <InputField className={"fleet-name"}>Son of Areus</InputField>
       <ul>{todosList}</ul>
