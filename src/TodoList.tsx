@@ -1,27 +1,30 @@
-import React, { useState } from "react";
-import ReactDOM from "react-dom";
+import React, { useState } from 'react';
 import Row from "./Row";
 import NewTodoForm from "./NewTodoForm";
 import uuid from "uuid";
 import "./TodoList.css";
 import InputField from "./components/InputField"
 
-function TodoList(props) {
+interface Props {
+  warband: string;
+}
+
+function TodoList({warband}: Props) {
   const [todos, setTodos] = useState([
-    { id: uuid(), task: "task 1", completed: false },
-    { id: uuid(), task: "task 2", completed: true }
+    { id: uuid.v1(), task: "task 1", completed: false },
+    { id: uuid.v1(), task: "task 2", completed: true }
   ]);
 
-  const create = newTodo => {
+  const create = (newTodo: { id: string; task: string; completed: boolean; }) => {
     console.log(newTodo);
     setTodos([...todos, newTodo]);
   };
 
-  const remove = id => {
+  const remove = (id: string) => {
     setTodos(todos.filter(todo => todo.id !== id));
   };
 
-  const update = (id, updtedTask) => {
+  const update = (id: string, updtedTask: any) => {
     const updatedTodos = todos.map(todo => {
       if (todo.id === id) {
         return { ...todo, task: updtedTask };
@@ -31,7 +34,7 @@ function TodoList(props) {
     setTodos(updatedTodos);
   };
 
-  const toggleComplete = id => {
+  const toggleComplete = (id: string) => {
     const updatedTodos = todos.map(todo => {
       if (todo.id === id) {
         return { ...todo, completed: !todo.completed };
@@ -52,11 +55,11 @@ function TodoList(props) {
   ));
 
   return (
-    <div className="">
+    <div>
       <h1>
-        Warband - {this.props.warband}
+        create Warband ({warband})
       </h1>
-      <InputField className={"fleet-name"}>Son of Areus</InputField>
+      <InputField subClass='nom' />
       <ul>{todosList}</ul>
       <NewTodoForm createRow={create} />
     </div>

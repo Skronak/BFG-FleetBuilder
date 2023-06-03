@@ -1,29 +1,33 @@
 import React, {useState} from "react";
 import "./InputField.css";
 
-function InputField({className}) {
+interface Props {
+    subClass: string
+}
+
+function InputField({subClass}: Props) {
     const [isEditing, setIsEditing] = useState(false);
     const [value, setValue] = useState("<fleet name>");
 
     const toggleFrom = () => {
         setIsEditing(!isEditing);
     };
-    const handleUpdate = evt => {
+    const handleUpdate = (evt: { preventDefault: () => void; }) => {
         evt.preventDefault();
         toggleFrom();
     };
-    const handleChange = evt => {
+    const handleChange = (evt: { target: { value: React.SetStateAction<string>; }; }) => {
         setValue(evt.target.value);
     };
     return isEditing ? (
-            <div className={className}>
+            <div className={subClass}>
                 <form className="Todo-edit-form" onSubmit={handleUpdate}>
                     <input onChange={handleChange} value={value} type="text"/>
                     <button>Save</button>
                 </form>
             </div>
         ) : (
-            <div className={className}>
+            <div className={subClass}>
                 <li className={"Todo-task"}>
                     {value}
                 </li>

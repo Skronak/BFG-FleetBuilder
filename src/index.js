@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import ReactDOM from "react-dom";
-import TodoList from "./TodoList.js";
+import TodoList from "./TodoList.tsx";
 import "./styles.css";
 
 function App() {
