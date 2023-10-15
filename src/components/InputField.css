@@ -11,3 +11,14 @@
 .fa-plus-circle:hover {
     color: lightslategrey;
 }
+
+#parent {
+}
+
+#parent .hidden-child{
+    visibility: hidden;
+}
+
+#parent:hover .hidden-child{
+    visibility: visible;
+}

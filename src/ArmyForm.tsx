@@ -1,66 +1,83 @@
 import { useState } from 'react';
 import Row from "./Row";
-import NewTodoForm from "./NewTodoForm";
+import InputAddComponent from "./inputAddComponent";
+import InputField from "./components/InputField"
 import "./TodoList.css";
+import uuid from "uuid";
+import {Warband} from "./army";
 
 interface Props {
-  warband: string;
+  warband: Warband;
 }
 
 function ArmyForm({warband}: Props) {
   const uuid = require('uuid');
-  const [todos, setTodos] = useState([
+  const [heroes, setHeroes] = useState([
+    { id: uuid.v1(), task: "task 1", completed: false },
+    { id: uuid.v1(), task: "task 2", completed: true }
+  ]);
+  const [henchmen, setHenchmen] = useState([
     { id: uuid.v1(), task: "task 1", completed: false },
     { id: uuid.v1(), task: "task 2", completed: true }
   ]);
 
   const create = (newTodo: { id: string; task: string; completed: boolean; }) => {
     console.log(newTodo);
-    setTodos([...todos, newTodo]);
+    setHenchmen([...henchmen, newTodo]);
   };
 
   const remove = (id: string) => {
-    setTodos(todos.filter(todo => todo.id !== id));
+    setHenchmen(henchmen.filter(todo => todo.id !== id));
   };
 
   const update = (id: string, updtedTask: any) => {
-    const updatedTodos = todos.map(todo => {
+    const updatedunits = henchmen.map(todo => {
       if (todo.id === id) {
         return { ...todo, task: updtedTask };
       }
       return todo;
     });
-    setTodos(updatedTodos);
+    setHenchmen(updatedunits);
   };
 
   const toggleComplete = (id: string) => {
-    const updatedTodos = todos.map(todo => {
+    const updatedunits = henchmen.map(todo => {
       if (todo.id === id) {
         return { ...todo, completed: !todo.completed };
       }
       return todo;
     });
-    setTodos(updatedTodos);
+    setHenchmen(updatedunits);
   };
-
-  const todosList = todos.map(todo => (
-    <Row
-      toggleComplete={toggleComplete}
-      update={update}
-      remove={remove}
-      key={todo.id}
-      todo={todo}
-    />
-  ));
 
   return (
     <div>
       <h1>
-        create Warband ({warband})
+        <InputField defaultValue={'New warband'} subClass='' />
       </h1>
-      {/*<InputField subClass='nom' />*/}
-      <ul>{todosList}</ul>
-      <NewTodoForm createRow={create} />
+
+      <div className={'armyform-hero-label'}>Heroes<button><i className="fa fa-plus-circle"></i></button></div>
+      {heroes.map(hero => (
+        <Row
+            toggleComplete={toggleComplete}
+            update={update}
+            remove={remove}
+            key={hero.id}
+            todo={hero}
+            data={warband.rules.heroes}
+        />))}
+      <div>Henchmen<button><i className="fa fa-plus-circle"></i></button></div>
+      {henchmen.map(unit => (
+        <Row
+            toggleComplete={toggleComplete}
+            update={update}
+            remove={remove}
+            key={unit.id}
+            todo={unit}
+            data={warband.rules.henchmen}
+        />
+      ))};
+      <InputAddComponent createRow={create} />
     </div>
   );
 }

@@ -3,11 +3,12 @@ import "./InputField.css";
 
 interface Props {
     subClass: string
+    defaultValue?: string;
 }
 
-export default function InputField({subClass}: Props) {
+export default function InputField({subClass, defaultValue}: Props) {
     const [isEditing, setIsEditing] = useState(false);
-    const [value, setValue] = useState("<fleet name>");
+    const [value, setValue] = useState(defaultValue? defaultValue : '');
 
     const toggleFrom = () => {
         setIsEditing(!isEditing);
@@ -27,18 +28,11 @@ export default function InputField({subClass}: Props) {
                 </form>
             </div>
         ) : (
-            <div className={subClass}>
-                <li className={"Todo-task"}>
-                    {value}
-                </li>
-                <div className="Todo-buttons">
-                    <button onClick={toggleFrom}>
-                        <i className="fas fa-pen"/>
-                    </button>
-                    <button>
-                        <i className="fa fa-plus-circle"></i>
-                    </button>
-                </div>
+            <div id='parent' className={subClass}>
+                {value}
+                <button className='hidden-child' onClick={toggleFrom}>
+                    <i className="fas fa-pen"/>
+                </button>
             </div>
         );
 }

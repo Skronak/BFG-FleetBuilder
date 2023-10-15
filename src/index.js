@@ -11,7 +11,7 @@ function App() {
     const [army, setArmy] = useState('');
 
     useEffect(()=> {
-        setArmy(data);
+//        setArmy(data);
     },[]);
 
     const handleButtonClick = () => {
@@ -33,8 +33,8 @@ function App() {
                   <button className='index' onClick={handleButtonClick}>CREATE WARBAND</button>
                   {showPopup && (
                       <div className="popup">
-                          { army.map(army =>
-                              <button className={"army-name"} onClick={() => handlePopupButtonClick(army.name)}>
+                          { data.map(army =>
+                              <button className={"army-name"} onClick={() => handlePopupButtonClick(army)}>
                                   <span className={'army-name'}>{army.name}</span>
                                   <img className={'army-logo'} src={require(`./${army.icon}`)}/> {/*https://stackoverflow.com/questions/39999367/how-do-i-reference-a-local-image-in-react*/}
                               </button>

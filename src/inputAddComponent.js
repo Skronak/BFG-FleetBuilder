@@ -23,7 +23,6 @@ export default function InputAddComponent({ createRow }) {
 
   return (
     <form className="NewTodoForm" onSubmit={handleSubmit}>
-      <label htmlFor="task">New todo</label>
       <input
         value={userInput.task}
         onChange={handleChange}

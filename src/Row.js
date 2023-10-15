@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import data from './navy.json';
 
 import "./Row.css";
 
-function Row({ todo, remove, update, toggleComplete }) {
+function Row({ data, todo, remove, update, toggleComplete }) {
 
   const [isEditing, setIsEditing] = useState(false);
   const [task, setTask] = useState(todo.task);
@@ -37,7 +36,7 @@ function Row({ todo, remove, update, toggleComplete }) {
         <form className="Todo-edit-form" onSubmit={handleUpdate}>
          <select value={task} onChange={handleChange}>
          { data.map(ship =>
-            <option value={ship.name}>{ship.name}-{ship.stats.cost} pts</option>
+            <option value={ship.name}>{ship.name}-{ship.cost} pts</option>
          )}
          </select>
           <button>Save</button>
