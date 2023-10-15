@@ -1,0 +1,13 @@
+.Todo-edit-form input,
+.Todo-edit-form button {
+    font-family: "Quicksand", sans-serif;
+    height: 3rem;
+}
+
+.Todo li {
+    list-style-type:none;
+}
+
+.fa-plus-circle:hover {
+    color: lightslategrey;
+}

@@ -1,9 +1,8 @@
-import React, { useState, useReducer } from "react";
-import ReactDOM from "react-dom";
+import React, { useReducer } from "react";
 import uuid from "uuid";
 import "./newTodoForm.css";
 
-function NewTodoForm({ createRow }) {
+export default function NewTodoForm({ createRow }) {
   const [userInput, setUserInput] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     {
@@ -37,5 +36,3 @@ function NewTodoForm({ createRow }) {
     </form>
   );
 }
-
-export default NewTodoForm;
