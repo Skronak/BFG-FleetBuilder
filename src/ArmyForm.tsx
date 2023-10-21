@@ -5,6 +5,7 @@ import InputField from "./components/InputField"
 import "./TodoList.css";
 import uuid from "uuid";
 import {Warband} from "./army";
+import Modal from './components/Modal'
 
 interface Props {
   warband: Warband;
@@ -55,7 +56,7 @@ function ArmyForm({warband}: Props) {
       <h1>
         <InputField defaultValue={'New warband'} subClass='' />
       </h1>
-
+        <Modal/>
       <div className={'armyform-hero-label'}>Heroes<button><i className="fa fa-plus-circle"></i></button></div>
       {heroes.map(hero => (
         <Row
