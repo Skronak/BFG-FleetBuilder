@@ -4,7 +4,7 @@ import InputAddComponent from "./inputAddComponent";
 import InputField from "./components/InputField"
 import "./TodoList.css";
 import uuid from "uuid";
-import {Warband} from "./army";
+import {PlayerUnit, Warband, WarBandRule} from "./army";
 import Modal from './components/Modal'
 
 interface Props {
@@ -13,10 +13,8 @@ interface Props {
 
 function ArmyForm({warband}: Props) {
   const uuid = require('uuid');
-  const [heroes, setHeroes] = useState([
-    { id: uuid.v1(), task: "task 1", completed: false },
-    { id: uuid.v1(), task: "task 2", completed: true }
-  ]);
+  const [openModal, setOpenModal] = useState(false);
+  const [heroes, setHeroes] = useState<PlayerUnit[]>([]);
   const [henchmen, setHenchmen] = useState([
     { id: uuid.v1(), task: "task 1", completed: false },
     { id: uuid.v1(), task: "task 2", completed: true }
@@ -32,13 +30,13 @@ function ArmyForm({warband}: Props) {
   };
 
   const update = (id: string, updtedTask: any) => {
-    const updatedunits = henchmen.map(todo => {
+    const units = henchmen.map(todo => {
       if (todo.id === id) {
         return { ...todo, task: updtedTask };
       }
       return todo;
     });
-    setHenchmen(updatedunits);
+    setHenchmen(units);
   };
 
   const toggleComplete = (id: string) => {
@@ -56,8 +54,19 @@ function ArmyForm({warband}: Props) {
       <h1>
         <InputField defaultValue={'New warband'} subClass='' />
       </h1>
-        <Modal/>
-      <div className={'armyform-hero-label'}>Heroes<button><i className="fa fa-plus-circle"></i></button></div>
+
+      {openModal && (
+      <Modal
+          onClose={()=>(setOpenModal(false))}
+          data={warband.rules.heroes}
+          onValidate={(val: any)=> setHeroes([
+            ...heroes,
+            { id: val.id }
+          ])}
+      />
+          )}
+
+      <div className={'armyform-hero-label'}>Heroes<button onClick={()=>setOpenModal(true)}><i className="fa fa-plus-circle"></i></button></div>
       {heroes.map(hero => (
         <Row
             toggleComplete={toggleComplete}
@@ -68,6 +77,11 @@ function ArmyForm({warband}: Props) {
             data={warband.rules.heroes}
         />))}
       <div>Henchmen<button><i className="fa fa-plus-circle"></i></button></div>
+      <button
+          onClick={() => setOpenModal(true)}
+          className='modalButton'>
+        Modal
+      </button>
       {henchmen.map(unit => (
         <Row
             toggleComplete={toggleComplete}
