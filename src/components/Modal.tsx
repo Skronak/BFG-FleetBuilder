@@ -13,7 +13,7 @@ export default function Modal(props: Props) {
     const [ unit, setUnit] = useState<WarBandRule>();
 
     const handleChange = (evt: { target: { value: any; }; }) => {
-        setUnit(props.data.find(elt => elt.id === evt.target.value));
+        setUnit(props.data.find(elt => elt.id === +evt.target.value));
     };
 
   return (
@@ -22,7 +22,7 @@ export default function Modal(props: Props) {
           <div className="modal-content">
               <select onChange={handleChange}>
                   { props.data.map(elt =>
-                      <option value={elt.id}>{elt.name}-{elt.cost} pts</option>
+                      <option key={elt.id} value={elt.id}>{elt.name}-{elt.cost} pts</option>
                   )}
               </select>
               <button className="close-modal" onClick={props.onClose}>

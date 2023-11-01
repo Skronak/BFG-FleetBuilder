@@ -44,6 +44,11 @@ function ArmyForm({warband}: Props) {
     setHenchmen(units);
   };
 
+  const showModal = (data: WarBandRule[]) => {
+      setCurrentUnit(data);
+      setOpenModal(true);
+  }
+
   const toggleComplete = (id: string) => {
     const updatedunits = henchmen.map(todo => {
       if (todo.id === id) {
@@ -75,7 +80,7 @@ function ArmyForm({warband}: Props) {
       )}
       {Object.entries(warband.rules).map(entry => (
         <>
-        <h2 className={'army-form-label'}>{entry[0]}<button className="button-icon" onClick={()=>{setOpenModal(true);setCurrentUnit(entry[1])}}><i className="fa fa-plus-circle"></i></button></h2>
+        <h2 className={'army-form-label'}>{entry[0]}<button className="button-icon" onClick={()=>showModal(entry[1])}><i className="fa fa-plus-circle"></i></button></h2>
         {/* TODO    PARCOURS CONTENU UTILISATEUR PAS DATA*/}
         {entry[1].map((unit: WarBandRule) => (
             <>
