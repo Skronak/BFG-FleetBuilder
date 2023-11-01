@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Row from "./Row";
 import InputAddComponent from "./inputAddComponent";
 import InputField from "./components/InputField"
-import "./TodoList.css";
+import "./armyform.css";
 import uuid from "uuid";
 import {PlayerUnit, Warband, WarBandRule} from "./army";
 import Modal from './components/Modal'
@@ -14,17 +14,22 @@ interface Props {
 function ArmyForm({warband}: Props) {
   const uuid = require('uuid');
   const [openModal, setOpenModal] = useState(false);
+  const [currentUnit, setCurrentUnit] = useState<WarBandRule[]>()
   const [heroes, setHeroes] = useState<PlayerUnit[]>([]);
+  const [cost, setCost] = useState<number>(0);
+
   const [henchmen, setHenchmen] = useState([
     { id: uuid.v1(), task: "task 1", completed: false },
     { id: uuid.v1(), task: "task 2", completed: true }
   ]);
 
   const create = (newTodo: { id: string; task: string; completed: boolean; }) => {
-    console.log(newTodo);
     setHenchmen([...henchmen, newTodo]);
   };
 
+  const calculatCost = () => {
+//    setCost(heroes.map(value => value.))
+  }
   const remove = (id: string) => {
     setHenchmen(henchmen.filter(todo => todo.id !== id));
   };
@@ -50,50 +55,44 @@ function ArmyForm({warband}: Props) {
   };
 
   return (
-    <div>
+    <>
       <h1>
         <InputField defaultValue={'New warband'} subClass='' />
       </h1>
+      <div className={"title-cost"}>
+        cost: {cost} points
+      </div>
 
       {openModal && (
-      <Modal
-          onClose={()=>(setOpenModal(false))}
-          data={warband.rules.heroes}
-          onValidate={(val: any)=> setHeroes([
-            ...heroes,
-            { id: val.id }
-          ])}
-      />
-          )}
-
-      <div className={'armyform-hero-label'}>Heroes<button onClick={()=>setOpenModal(true)}><i className="fa fa-plus-circle"></i></button></div>
-      {heroes.map(hero => (
-        <Row
-            toggleComplete={toggleComplete}
-            update={update}
-            remove={remove}
-            key={hero.id}
-            todo={hero}
-            data={warband.rules.heroes}
-        />))}
-      <div>Henchmen<button><i className="fa fa-plus-circle"></i></button></div>
-      <button
-          onClick={() => setOpenModal(true)}
-          className='modalButton'>
-        Modal
-      </button>
-      {henchmen.map(unit => (
-        <Row
-            toggleComplete={toggleComplete}
-            update={update}
-            remove={remove}
-            key={unit.id}
-            todo={unit}
-            data={warband.rules.henchmen}
+        <Modal
+            onClose={()=>(setOpenModal(false))}
+            data={currentUnit!}
+            onValidate={(val: any)=> setHeroes([
+              ...heroes,
+              { id: val.id }
+            ])}
         />
-      ))};
-      <InputAddComponent createRow={create} />
-    </div>
+      )}
+      {Object.entries(warband.rules).map(entry => (
+        <>
+        <h2 className={'army-form-label'}>{entry[0]}<button className="button-icon" onClick={()=>{setOpenModal(true);setCurrentUnit(entry[1])}}><i className="fa fa-plus-circle"></i></button></h2>
+        {/* TODO    PARCOURS CONTENU UTILISATEUR PAS DATA*/}
+        {entry[1].map((unit: WarBandRule) => (
+            <>
+              <Row
+                  toggleComplete={toggleComplete}
+                  update={update}
+                  remove={remove}
+                  key={unit.id}
+                  todo={unit}
+                  data={unit}/>
+              <InputAddComponent createRow={create}/>
+            </>
+        ))
+        }
+        </>
+      ))}
+    </>
   );
 }
 

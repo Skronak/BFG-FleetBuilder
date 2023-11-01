@@ -2,8 +2,8 @@ export type Warband = {
     name: string,
     icon: string,
     rules: {
-        heroes: [WarBandRule],
-        henchmen: [WarBandRule]
+        heroes: WarBandRule[],
+        henchmen: WarBandRule[]
     };
 }
 
@@ -15,7 +15,7 @@ export type WarBandRule = {
     cost: number,
     minLimit: number,
     maxLimit: number,
-    profil: [],
+    profil: number[],
     equipWeapon: boolean,
     equipArmor: boolean,
     rules: [{

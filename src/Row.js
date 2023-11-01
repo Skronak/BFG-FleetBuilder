@@ -48,6 +48,7 @@ function Row({ data, todo, remove, update, toggleComplete }) {
       <div className="Todo">
         <li
           id={todo.id}
+          key={todo.id}
           onClick={toggleCompleted}
           className={todo.completed ? "Todo-task completed" : "Todo-task"}
         >
