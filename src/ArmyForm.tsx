@@ -1,26 +1,22 @@
 import React, { useState } from 'react';
 import Row from "./Row";
-import InputAddComponent from "./inputAddComponent";
+import InputAddComponent from "./components/inputAddComponent";
 import InputField from "./components/InputField"
-import "./armyform.css";
-import uuid from "uuid";
-import {PlayerUnit, Warband, WarBandRule} from "./army";
+import {PlayerUnit, Army, Unit} from "./army";
 import Modal from './components/Modal'
+import "./armyform.css";
 
 interface Props {
-  warband: Warband;
+  warband: Army;
 }
 
-function ArmyForm({warband}: Props) {
-  const uuid = require('uuid');
+function ArmyForm() {
   const [openModal, setOpenModal] = useState(false);
-  const [currentUnit, setCurrentUnit] = useState<WarBandRule[]>()
+  const [currentUnit, setCurrentUnit] = useState<Unit[]>()
   const [heroes, setHeroes] = useState<PlayerUnit[]>([]);
   const [cost, setCost] = useState<number>(0);
 
   const [henchmen, setHenchmen] = useState([
-    { id: uuid.v1(), task: "task 1", completed: false },
-    { id: uuid.v1(), task: "task 2", completed: true }
   ]);
 
   const create = (newTodo: { id: string; task: string; completed: boolean; }) => {
@@ -44,7 +40,7 @@ function ArmyForm({warband}: Props) {
     setHenchmen(units);
   };
 
-  const showModal = (data: WarBandRule[]) => {
+  const showModal = (data: Unit[]) => {
       setCurrentUnit(data);
       setOpenModal(true);
   }
@@ -82,7 +78,7 @@ function ArmyForm({warband}: Props) {
         <>
         <h2 className={'army-form-label'}>{entry[0]}<button className="button-icon" onClick={()=>showModal(entry[1])}><i className="fa fa-plus-circle"></i></button></h2>
         {/* TODO    PARCOURS CONTENU UTILISATEUR PAS DATA*/}
-        {entry[1].map((unit: WarBandRule) => (
+        {entry[1].map((unit: Unit) => (
             <>
               <Row
                   toggleComplete={toggleComplete}

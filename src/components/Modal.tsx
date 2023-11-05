@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import "./Modal.css";
-import {WarBandRule} from "../army";
+import {Unit} from "../army";
 
 interface Props {
     onClose: () => void;
     onValidate: (str: any) => void;
     currentElement?: {};
-    data: WarBandRule[];
+    data: Unit[];
 }
 
 export default function Modal(props: Props) {
-    const [ unit, setUnit] = useState<WarBandRule>();
+    const [ unit, setUnit] = useState<Unit>();
 
     const handleChange = (evt: { target: { value: any; }; }) => {
         setUnit(props.data.find(elt => elt.id === +evt.target.value));

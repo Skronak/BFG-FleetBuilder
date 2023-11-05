@@ -1,13 +1,14 @@
-export type Warband = {
+export type Army = {
+    id: number,
     name: string,
     icon: string,
-    rules: {
-        heroes: WarBandRule[],
-        henchmen: WarBandRule[]
+    units: {
+        heroes: Unit[],
+        henchmen: Unit[]
     };
 }
 
-export type WarBandRule = {
+export type Unit = {
     id: number,
     name: string,
     description: string,
