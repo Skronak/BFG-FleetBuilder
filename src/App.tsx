@@ -1,31 +1,23 @@
-import {Link, Route,BrowserRouter as Router, Routes} from "react-router-dom";
+import {Navigate, Route, Routes, useNavigate} from "react-router-dom";
 import Home from "./Home";
 import React from "react";
 import {ArmyCreateForm} from "./ArmyCreateForm";
+import Header from "./pages/Header";
+import ArmyList from "./pages/ArmyList";
 
 const App: React.FC = () => {
+    const navigate = useNavigate();
     return (
-        <Router>
-            {/*<nav>*/}
-            {/*    <ul>*/}
-            {/*        <li>*/}
-            {/*            <Link to="/">Home</Link>*/}
-            {/*        </li>*/}
-            {/*        <li>*/}
-            {/*            <Link to="/about">About</Link>*/}
-            {/*        </li>*/}
-            {/*        <li>*/}
-            {/*            <Link to="/products">Products</Link>*/}
-            {/*        </li>*/}
-            {/*        <li>*/}
-            {/*            <Link to="/contact">Contact</Link>*/}
-            {/*        </li>*/}
-            {/*    </ul>*/}
-            {/*</nav>*/}
-        <Routes>
-            <Route path="/" element={<Home/>} />
-            <Route path="/create" element={<ArmyCreateForm/>} />
-        </Routes>
-        </Router>
+        <div className='App'>
+            <Header></Header>
+                <Routes>
+                    <Route path="/" element={<Home/>} />
+                    <Route path="/home" element={<Home/>} />
+                    <Route path="/list" element={<ArmyList/>} />
+                    <Route path="/create" element={<ArmyCreateForm/>} />
+                    <Route path="*" element={<Navigate to="/"/>} />
+                </Routes>
+            <button onClick={()=>navigate(-1)}>Précedent</button>
+        </div>
     );
 };export default App;
