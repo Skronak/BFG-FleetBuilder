@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Modal.css";
-import {Unit} from "../army";
+import {Unit} from "@/army";
 
 interface Props {
     onClose: () => void;

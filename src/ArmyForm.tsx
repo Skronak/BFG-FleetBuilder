@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Row from "./Row";
 import InputAddComponent from "./components/inputAddComponent";
 import InputField from "./components/InputField"
-import {PlayerUnit, Army, Unit} from "./army";
+import type {PlayerUnit, Army, Unit} from "./army.d.ts";
 import Modal from './components/Modal'
 import "./armyform.css";
 
