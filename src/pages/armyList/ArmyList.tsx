@@ -2,12 +2,19 @@ import React, {useEffect, useState} from "react";
 import InputAddComponent from "@/components/inputAddComponent";
 import {useNavigate} from "react-router-dom";
 import data from "@/assets/armyData.json";
-import ActionButton from "../components/ActionButton";
+import ActionButton from "../../components/ActionButton";
 import {Army, PlayerArmy} from "@/army";
 
-import "../App.css";
+import "../../App.css";
 import './army-list.css';
 import {TypeActionButton} from "@/constants";
+import {useDataStore} from "@/store/dataStore";
+import Modal from "@/components/Modal";
+import ModalWrapper from "@/components/ModalWrapper";
+import ArmySelectModal from "@/pages/armyList/ArmySelectModal";
+import {getAssetUrl, getArmyIcon} from "@/components/Utils";
+
+import app from "@/App";
 
 function Home() {
     const [showPopup, setShowPopup] = useState(false);
@@ -15,6 +22,7 @@ function Home() {
     const [army, setArmy] = useState<Army>();
     const [playerArmy, setPlayerArmy] = useState<PlayerArmy[]>();
     const navigate = useNavigate();
+    const {appData} = useDataStore();
 
     useEffect(() => {
         // setLocalStorage(JSON.stringify({id: 'test', value: 'ezrz'}));
@@ -39,21 +47,17 @@ function Home() {
     function deleteUserArmy(id: number) {
     }
 
-    function getRaceIcon(id: number){
-        let iconName = data.filter(item => item.id == id).map(item => item.icon)[0];
-        return getImageUrl(iconName);
-    }
-
     return (
         <div className="builder-form">
             <div>BANDES DISPONIBLES</div>
-            <InputAddComponent handleCreate={showPopup} addLabel={'CREER'} placeholder={'new Army'}/>
+            <InputAddComponent handleCreate={()=>setShowPopup(true)} addLabel={'CREER'} placeholder={'new Army'}/>
+            {showPopup && (<ArmySelectModal onClose={()=>setShowPopup(false)} data={appData}/>)}
             <br/>
-                <div className="player-armies">
+            <div className="player-armies">
                     {playerArmy && playerArmy.map(army=> (
                         <span className={"user-army-row"}>
                             <button className={"army-name"}>
-                                <img className={'army-logo'} src={getRaceIcon(army.race)}/>
+                                <img className={'army-logo'} src={getArmyIcon(appData, army.race)}/>
                                 <span className={'army-name'}>{army.name}</span>
                                 <span>500 pts</span>
                             </button>

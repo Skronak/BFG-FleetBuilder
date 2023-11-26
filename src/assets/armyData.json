@@ -3,7 +3,7 @@
     "id": 1,
     "name": "arvelander",
     "icon": "icon-human.png",
-    "rules": {
+    "units": {
       "heroes": [
         {
           "id": 1,

@@ -3,7 +3,7 @@ import Home from "./Home";
 import React from "react";
 import {ArmyCreateForm} from "./ArmyCreateForm";
 import Header from "./pages/Header";
-import ArmyList from "./pages/ArmyList";
+import ArmyList from "./pages/armyList/ArmyList";
 
 const App: React.FC = () => {
     const navigate = useNavigate();

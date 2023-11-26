@@ -8,6 +8,11 @@ export type Army = {
     };
 }
 
+export type Rule = {
+    name: string,
+    effect: string
+};
+
 export type Unit = {
     id: number,
     name: string,
@@ -19,10 +24,7 @@ export type Unit = {
     profil: number[],
     equipWeapon: boolean,
     equipArmor: boolean,
-    rules: [{
-        "name": string,
-        "effect": string
-    }]
+    rules: Rule[]
 }
 
 export type PlayerArmy = {
@@ -30,14 +32,19 @@ export type PlayerArmy = {
     name: string;
     hero: [{
         id: number;
-        weapon:[PlayerUnit];
-        armor: [PlayerUnit]
+        weapon:PlayerUnit[];
+        armor: PlayerUnit[]
     }];
     henchmen: [{
         id: number;
-        weapon:[PlayerUnit];
-        armor: [PlayerUnit]
+        weapon:PlayerUnit[];
+        armor: PlayerUnit[]
     }];
+}
+
+export type ItemOption = {
+    id: string;
+    value: string;
 }
 
 export type PlayerUnit = {
