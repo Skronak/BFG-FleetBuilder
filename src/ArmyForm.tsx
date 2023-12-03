@@ -1,23 +1,35 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import Row from "./Row";
 import InputAddComponent from "./components/inputAddComponent";
 import InputField from "./components/InputField"
 import type {PlayerUnit, Army, Unit} from "./army.d.ts";
 import Modal from './components/Modal'
 import "./armyform.css";
+import {useDataStore} from "@/store/dataStore";
 
 interface Props {
-  warband: Army;
+  armyId: number;
 }
 
-function ArmyForm() {
+function ArmyForm(props: Props) {
   const [openModal, setOpenModal] = useState(false);
   const [currentUnit, setCurrentUnit] = useState<Unit[]>()
   const [heroes, setHeroes] = useState<PlayerUnit[]>([]);
   const [cost, setCost] = useState<number>(0);
+  const {appData} = useDataStore();
 
   const [henchmen, setHenchmen] = useState([
   ]);
+
+  const getArmyData = (): Army => {
+    return appData.find(army=> army.id === props.armyId) || {id: 0,
+      name: 'string',
+      icon: 'string',
+      units: {
+        heroes: [],
+        henchmen: []
+      }}
+  }
 
   const create = (newTodo: { id: string; task: string; completed: boolean; }) => {
     setHenchmen([...henchmen, newTodo]);
@@ -74,10 +86,9 @@ function ArmyForm() {
             ])}
         />
       )}
-      {Object.entries(warband.rules).map(entry => (
+      {Object.entries(getArmyData().units).map(entry => (
         <>
         <h2 className={'army-form-label'}>{entry[0]}<button className="button-icon" onClick={()=>showModal(entry[1])}><i className="fa fa-plus-circle"></i></button></h2>
-        {/* TODO    PARCOURS CONTENU UTILISATEUR PAS DATA*/}
         {entry[1].map((unit: Unit) => (
             <>
               <Row

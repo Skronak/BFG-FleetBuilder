@@ -1,9 +1,9 @@
 import {Navigate, Route, Routes, useNavigate} from "react-router-dom";
 import Home from "./Home";
 import React from "react";
-import {ArmyCreateForm} from "./ArmyCreateForm";
+import {CreateArmyPage} from "@/pages/createArmy/CreateArmyPage";
 import Header from "./pages/Header";
-import ArmyList from "./pages/armyList/ArmyList";
+import ListArmyPage from "@/pages/armyList/ListArmyPage";
 
 const App: React.FC = () => {
     const navigate = useNavigate();
@@ -13,8 +13,8 @@ const App: React.FC = () => {
                 <Routes>
                     <Route path="/" element={<Home/>} />
                     <Route path="/home" element={<Home/>} />
-                    <Route path="/list" element={<ArmyList/>} />
-                    <Route path="/create" element={<ArmyCreateForm/>} />
+                    <Route path="/list" element={<ListArmyPage/>} />
+                    <Route path="/create/:idArmy" element={<CreateArmyPage/>} />
                     <Route path="*" element={<Navigate to="/"/>} />
                 </Routes>
             <button onClick={()=>navigate(-1)}>Précedent</button>

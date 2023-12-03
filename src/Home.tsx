@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import {useNavigate} from "react-router-dom";
 
-function Home() {
+export default function Home() {
 
     const navigate = useNavigate();
 
@@ -16,5 +16,3 @@ function Home() {
         </div>
     );
 }
-
-export default Home
