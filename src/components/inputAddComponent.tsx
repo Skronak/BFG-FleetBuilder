@@ -1,7 +1,15 @@
 import React, { useReducer } from "react";
 import "./inputAddComponent.css";
 
-export default function InputAddComponent({ handleCreate, placeholder, addLabel  }) {
+interface Props {
+    placeholder?: string;
+    handleChange: () => void;
+    withButton?: boolean;
+    buttonLabel?: string;
+    handleClickButton?: () => void;
+}
+
+export default function InputAddComponent(props: Props) {
   const [userInput, setUserInput] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     {
@@ -16,7 +24,7 @@ export default function InputAddComponent({ handleCreate, placeholder, addLabel 
   const handleSubmit = evt => {
     evt.preventDefault();
     const newTodo = { id: 0, task: userInput.task, completed: false };
-      handleCreate(newTodo);
+      props.handleClickButton(newTodo);
     setUserInput({ task: "" });
   };
 
@@ -28,9 +36,9 @@ export default function InputAddComponent({ handleCreate, placeholder, addLabel 
         id="task"
         type="text"
         name="task"
-        placeholder={placeholder}
+        placeholder={props.placeholder? props.placeholder : ''}
       />
-      <button>{addLabel}</button>
+        {props.withButton && <button onClick={props.handleClickButton}>{props.buttonLabel}</button>}
     </form>
   );
 }

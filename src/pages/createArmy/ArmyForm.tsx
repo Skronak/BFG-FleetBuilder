@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import Row from "./Row";
-import InputAddComponent from "./components/inputAddComponent";
-import InputField from "./components/InputField"
-import type {PlayerUnit, Army, Unit} from "./army.d.ts";
-import Modal from './components/Modal'
+import Row from "../../Row";
+import InputAddComponent from "../../components/inputAddComponent";
+import InputField from "../../components/InputField"
+import type {PlayerUnit, Army, Unit} from "../../army.d.ts";
+import Modal from '../../components/Modal'
 import "./armyform.css";
 import {useDataStore} from "@/store/dataStore";
+import useLocalStorage from "react-use-localstorage";
 
 interface Props {
   armyId: number;
@@ -17,9 +18,14 @@ function ArmyForm(props: Props) {
   const [heroes, setHeroes] = useState<PlayerUnit[]>([]);
   const [cost, setCost] = useState<number>(0);
   const {appData} = useDataStore();
+  const [henchmen, setHenchmen] = useState([]);
 
-  const [henchmen, setHenchmen] = useState([
-  ]);
+  useEffect(() => {
+    const playerArmy = localStorage.getItem('playerArmies');
+    setHeroes(playerArmy ? JSON.parse(playerArmy)        : null);
+    Object.entries(getArmyData().units).map(entry => (
+
+  }, []);
 
   const getArmyData = (): Army => {
     return appData.find(army=> army.id === props.armyId) || {id: 0,
@@ -38,6 +44,7 @@ function ArmyForm(props: Props) {
   const calculatCost = () => {
 //    setCost(heroes.map(value => value.))
   }
+
   const remove = (id: string) => {
     setHenchmen(henchmen.filter(todo => todo.id !== id));
   };
@@ -68,13 +75,9 @@ function ArmyForm(props: Props) {
   };
 
   return (
-    <>
-      <h1>
-        <InputField defaultValue={'New warband'} subClass='' />
-      </h1>
-      <div className={"title-cost"}>
-        cost: {cost} points
-      </div>
+    <div className="builder-form">
+      <InputAddComponent handleChange={()=> null} placeholder={'Warband'}/>
+      <div className={"title-cost"}>cost: {cost} points</div>
 
       {openModal && (
         <Modal
@@ -98,14 +101,14 @@ function ArmyForm(props: Props) {
                   key={unit.id}
                   todo={unit}
                   data={unit}/>
-              <InputAddComponent createRow={create}/>
             </>
         ))
         }
         </>
       ))}
-    </>
-  );
+      <button>Enregistrer</button>
+    </div>
+  )
 }
 
 export default ArmyForm;

@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from "react";
-import InputAddComponent from "@/components/inputAddComponent";
-import {useNavigate} from "react-router-dom";
 import ActionButton from "../../components/ActionButton";
-import {Army, PlayerArmy} from "@/army";
+import {PlayerArmy} from "@/army";
 
 import "../../App.css";
 import './army-list.css';

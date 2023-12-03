@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import ArmyForm from "@/ArmyForm";
+import ArmyForm from "@/pages/createArmy/ArmyForm";
 import {Link, useParams} from "react-router-dom";
 
 export function CreateArmyPage() {
@@ -10,11 +10,11 @@ export function CreateArmyPage() {
     }
 
     useEffect(() => {
-        console.log(`/something/${idArmy}`);
+        console.log(`/${idArmy}`);
     }, []);
 
-    return (showEditList ? (
-        <ArmyForm armyId={idArmy}/>
+    return (showEditList && idArmy? (
+        <ArmyForm armyId={+idArmy}/>
     ) : (
         <div className="builder-form">
             <p>{idArmy}</p>
