@@ -2,11 +2,11 @@ import React, {useEffect, useState} from 'react';
 import Row from "../../Row";
 import InputAddComponent from "../../components/inputAddComponent";
 import InputField from "../../components/InputField"
-import type {PlayerUnit, Army, Unit} from "../../army.d.ts";
-import Modal from '../../components/Modal'
+import type {PlayerUnit, Army, Unit, PlayerArmy} from "../../army.d.ts";
 import "./armyform.css";
 import {useDataStore} from "@/store/dataStore";
 import useLocalStorage from "react-use-localstorage";
+import AddUnitModal from "../../components/AddUnitModal";
 
 interface Props {
   armyId: number;
@@ -16,15 +16,17 @@ function ArmyForm(props: Props) {
   const [openModal, setOpenModal] = useState(false);
   const [currentUnit, setCurrentUnit] = useState<Unit[]>()
   const [heroes, setHeroes] = useState<PlayerUnit[]>([]);
-  const [cost, setCost] = useState<number>(0);
-  const {appData} = useDataStore();
   const [henchmen, setHenchmen] = useState([]);
+  const [cost, setCost] = useState<number>(0);
+
+  const {appData} = useDataStore();
+  const [playerArmy, setPlayerArmy] = useState<PlayerArmy>();
 
   useEffect(() => {
-    const playerArmy = localStorage.getItem('playerArmies');
-    setHeroes(playerArmy ? JSON.parse(playerArmy)        : null);
-    Object.entries(getArmyData().units).map(entry => (
-
+    const dataLS = localStorage.getItem('playerArmies');
+    if (dataLS) {
+      setPlayerArmy(JSON.parse(dataLS));
+    }
   }, []);
 
   const getArmyData = (): Army => {
@@ -40,10 +42,6 @@ function ArmyForm(props: Props) {
   const create = (newTodo: { id: string; task: string; completed: boolean; }) => {
     setHenchmen([...henchmen, newTodo]);
   };
-
-  const calculatCost = () => {
-//    setCost(heroes.map(value => value.))
-  }
 
   const remove = (id: string) => {
     setHenchmen(henchmen.filter(todo => todo.id !== id));
@@ -80,7 +78,8 @@ function ArmyForm(props: Props) {
       <div className={"title-cost"}>cost: {cost} points</div>
 
       {openModal && (
-        <Modal
+        <AddUnitModal
+          title='Ajouter une unite'
             onClose={()=>(setOpenModal(false))}
             data={currentUnit!}
             onValidate={(val: any)=> setHeroes([

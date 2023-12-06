@@ -15,12 +15,21 @@ export default function ListArmyPage() {
     const {appData} = useDataStore();
 
     useEffect(() => {
-        // setLocalStorage(JSON.stringify({id: 'test', value: 'ezrz'}));
         localStorage.setItem('playerArmies', JSON.stringify([{
             race: 1,
             name: 'Knight of Azueri',
-            hero: [],
-            henchmen: [],
+            units: [{
+                heroes: [{
+                  id: 1,
+                  weapon: [],
+                  armor: [],
+                }],
+                henchmen: [{
+                  id: 1,
+                  weapon: [],
+                  armor: [],
+                }]}
+              ]
         }]));
         const playerArmy = localStorage.getItem('playerArmies');
         setPlayerArmy(playerArmy ? JSON.parse(playerArmy) : null);

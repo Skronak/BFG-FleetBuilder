@@ -30,16 +30,10 @@ export type Unit = {
 export type PlayerArmy = {
     race: number;
     name: string;
-    hero: [{
-        id: number;
-        weapon:PlayerUnit[];
-        armor: PlayerUnit[]
-    }];
-    henchmen: [{
-        id: number;
-        weapon:PlayerUnit[];
-        armor: PlayerUnit[]
-    }];
+    units: [{
+        heroes: PlayerUnit[];
+        henchmen: PlayerUnit[];
+    }]
 }
 
 export type ItemOption = {
@@ -49,4 +43,6 @@ export type ItemOption = {
 
 export type PlayerUnit = {
     id: number;
+    weapon: number[];
+    armor: number[];
 }
