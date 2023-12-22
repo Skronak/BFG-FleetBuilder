@@ -16,6 +16,7 @@ export default function ListArmyPage() {
 
     useEffect(() => {
         localStorage.setItem('playerArmies', JSON.stringify([{
+            id: 1,
             race: 1,
             name: 'Knight of Azueri',
             units: [{
@@ -52,7 +53,7 @@ export default function ListArmyPage() {
             <br/>
             <div className="player-armies">
                 {playerArmy && playerArmy.map(army => (
-                    <span className={"user-army-row"}>
+                    <span key={army.id} className={"user-army-row"}>
                             <button className={"army-name"}>
                                 <img className={'army-logo'} src={getArmyIcon(appData, army.race)}/>
                                 <span className={'army-name'}>{army.name}</span>

@@ -15,7 +15,9 @@ export type Rule = {
 
 export type Unit = {
     id: number,
+    type: string,
     name: string,
+    icon: string,
     description: string,
     startingExp: number,
     cost: number,
@@ -28,12 +30,19 @@ export type Unit = {
 }
 
 export type PlayerArmy = {
+    id: number;
     race: number;
     name: string;
-    units: [{
+    units: {
         heroes: PlayerUnit[];
         henchmen: PlayerUnit[];
-    }]
+    }
+}
+
+export type PlayerUnit = {
+    id: number;
+    weapon: number[];
+    armor: number[];
 }
 
 export type ItemOption = {
@@ -41,8 +50,23 @@ export type ItemOption = {
     value: string;
 }
 
-export type PlayerUnit = {
+export type PlayerArmyLS = {
+    id: number;
+    race: number;
+    name: string;
+    units: {
+        heroes: PlayerUnitLS[];
+        henchmen: PlayerUnitLS[];
+    }
+}
+
+export type PlayerUnitLS = {
     id: number;
     weapon: number[];
     armor: number[];
+}
+
+export type TypedUnit = {
+    type: string,
+    units: Unit[];
 }

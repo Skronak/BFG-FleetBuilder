@@ -1,12 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import Row from "../../Row";
 import InputAddComponent from "../../components/inputAddComponent";
-import InputField from "../../components/InputField"
-import type {PlayerUnit, Army, Unit, PlayerArmy} from "../../army.d.ts";
+import type {Army, PlayerArmy, PlayerUnit, TypedUnit, Unit} from "../../army.d.ts";
 import "./armyform.css";
 import {useDataStore} from "@/store/dataStore";
-import useLocalStorage from "react-use-localstorage";
-import AddUnitModal from "../../components/AddUnitModal";
+import UnitModal from "./UnitModal";
+import {useNavigate} from "react-router-dom";
 
 interface Props {
   armyId: number;
@@ -14,97 +13,118 @@ interface Props {
 
 function ArmyForm(props: Props) {
   const [openModal, setOpenModal] = useState(false);
-  const [currentUnit, setCurrentUnit] = useState<Unit[]>()
-  const [heroes, setHeroes] = useState<PlayerUnit[]>([]);
-  const [henchmen, setHenchmen] = useState([]);
-  const [cost, setCost] = useState<number>(0);
-
+  const [currentUnit, setCurrentUnit] = useState<TypedUnit>()
   const {appData} = useDataStore();
-  const [playerArmy, setPlayerArmy] = useState<PlayerArmy>();
+  const [playerArmy, setPlayerArmy] = useState<PlayerArmy>({
+    id: 0,
+    name: "",
+    race: 0,
+    units: {henchmen: [], heroes: []}
+  });
+  const navigate = useNavigate();
 
   useEffect(() => {
     const dataLS = localStorage.getItem('playerArmies');
-    if (dataLS) {
-      setPlayerArmy(JSON.parse(dataLS));
+    // let keys: string[] = Object.keys(getArmyData().units);
+    // keys.map(k=> {
+    //   playerArmy.units[k] = [];
+    // });
+
+    let defaultPlayerArmy = {
+      id: 1,// todo add uniq identifier
+      race: props.armyId,
+      name: '',
+      units: {
+        heroes: [],
+        henchmen: []
+      }
+    };
+
+    if (!dataLS) {
+//      setPlayerArmy(JSON.parse(dataLS));// todo save non compatible => reconstruire l'objet
+      // TODO => initialiser player army depuis localStorage
+    } else {
+      setPlayerArmy(defaultPlayerArmy);
     }
   }, []);
 
   const getArmyData = (): Army => {
-    return appData.find(army=> army.id === props.armyId) || {id: 0,
-      name: 'string',
+    return appData.find(army => army.id === props.armyId) || {
+      id: 0,
+      name: 'DATA NOT FOUND',
       icon: 'string',
       units: {
         heroes: [],
         henchmen: []
-      }}
+      }
+    }
   }
 
-  const create = (newTodo: { id: string; task: string; completed: boolean; }) => {
-    setHenchmen([...henchmen, newTodo]);
-  };
-
   const remove = (id: string) => {
-    setHenchmen(henchmen.filter(todo => todo.id !== id));
+    //setHenchmen(henchmen.filter(todo => todo.id !== id));
   };
 
   const update = (id: string, updtedTask: any) => {
-    const units = henchmen.map(todo => {
+    /*const units = henchmen.map(todo => {
       if (todo.id === id) {
-        return { ...todo, task: updtedTask };
+        return {...todo, task: updtedTask};
       }
       return todo;
     });
     setHenchmen(units);
+    */
   };
 
-  const showModal = (data: Unit[]) => {
-      setCurrentUnit(data);
-      setOpenModal(true);
+  const showModal = (data: TypedUnit) => {
+    console.log(data);
+    setCurrentUnit(data);
+    setOpenModal(true);
   }
-
-  const toggleComplete = (id: string) => {
-    const updatedunits = henchmen.map(todo => {
-      if (todo.id === id) {
-        return { ...todo, completed: !todo.completed };
-      }
-      return todo;
-    });
-    setHenchmen(updatedunits);
-  };
 
   return (
     <div className="builder-form">
-      <InputAddComponent handleChange={()=> null} placeholder={'Warband'}/>
-      <div className={"title-cost"}>cost: {cost} points</div>
+      <InputAddComponent handleChange={(evt) => setPlayerArmy({...playerArmy, name: evt.target.value})} placeholder={'Warband'}/>
+      <div className={"title-cost"}>cost: points</div>
 
       {openModal && (
-        <AddUnitModal
+        <UnitModal
           title='Ajouter une unite'
-            onClose={()=>(setOpenModal(false))}
-            data={currentUnit!}
-            onValidate={(val: any)=> setHeroes([
-              ...heroes,
-              { id: val.id }
-            ])}
+          onClose={() => (setOpenModal(false))}
+          data={currentUnit!}
+          onValidate={(val: Unit) => {
+            setPlayerArmy({
+                ...playerArmy,
+                units: {
+                  heroes: [val, ...playerArmy.units.heroes],
+                  henchmen: []
+                }
+            }
+            );
+            setOpenModal(false);
+          }}
         />
       )}
       {Object.entries(getArmyData().units).map(entry => (
         <>
-        <h2 className={'army-form-label'}>{entry[0]}<button className="button-icon" onClick={()=>showModal(entry[1])}><i className="fa fa-plus-circle"></i></button></h2>
-        {entry[1].map((unit: Unit) => (
-            <>
-              <Row
-                  toggleComplete={toggleComplete}
-                  update={update}
-                  remove={remove}
-                  key={unit.id}
-                  todo={unit}
-                  data={unit}/>
-            </>
-        ))
-        }
+          <h2 className={'army-form-label'}>{entry[0]}
+            <button className="button-icon" onClick={() => showModal({type: entry[0], units: entry[1]})}>+</button>
+          </h2>
+          {playerArmy.units && playerArmy.units[entry[0]]
+              .map((unit) => (
+                <>
+                {
+                  <Row
+                    update={update}
+                    remove={remove}
+                    key={unit.id}
+                    data={unit}/>
+                }
+                </>
+            ))
+          }
         </>
       ))}
+      <button onClick={()=>navigate('/list')}>Annuler</button>
       <button>Enregistrer</button>
     </div>
   )

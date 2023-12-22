@@ -73,5 +73,4 @@ export default function AddUnitModal(props: Props) {
       </div>
     </ModalWrapper>
   )
-    ;
 }

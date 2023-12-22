@@ -1,38 +1,27 @@
-import React, { useReducer } from "react";
+import React, {useReducer, useState} from "react";
 import "./inputAddComponent.css";
 
 interface Props {
     placeholder?: string;
-    handleChange: () => void;
+    handleChange: (evt: React.ChangeEvent<HTMLInputElement>) => void;
     withButton?: boolean;
     buttonLabel?: string;
     handleClickButton?: () => void;
 }
 
 export default function InputAddComponent(props: Props) {
-  const [userInput, setUserInput] = useReducer(
-    (state, newState) => ({ ...state, ...newState }),
-    {
-      task: ""
-    }
-  );
+  const [userInput, setUserInput] = useState("");
 
-  const handleChange = evt => {
-    setUserInput({ [evt.target.name]: evt.target.value });
-  };
-
-  const handleSubmit = evt => {
-    evt.preventDefault();
-    const newTodo = { id: 0, task: userInput.task, completed: false };
-      props.handleClickButton(newTodo);
-    setUserInput({ task: "" });
-  };
+  const onChange = (val: React.ChangeEvent<HTMLInputElement>) => {
+    setUserInput(val.target.value);
+    props.handleChange(val);
+  }
 
   return (
-    <form className="NewTodoForm" onSubmit={handleSubmit}>
+    <form className="NewTodoForm">
       <input
-        value={userInput.task}
-        onChange={handleChange}
+        value={userInput}
+        onChange={onChange}
         id="task"
         type="text"
         name="task"

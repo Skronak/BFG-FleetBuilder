@@ -8,6 +8,7 @@
         {
           "id": 1,
           "name": "Captain",
+          "icon": "icon-human.png",
           "description": "The Captain of a mercenary warband is\ntypically a middleaged veteran soldier of the\nImperial army, most likely he was a sergeant\nor other petty officer. The survival of a\nmercenary warband relies more on the wit\nand experience of its captain, than on how\ngood a fighter he is. It’s all too common that\nan inexperienced captain will lead his men\ninto an ambush, or lead them on a long\njourney with no food or supplies. Being a\nsuccessful captain means that your men will\nfollow you to hell and back, and plenty of\ngold crowns and feasting. A captain that fails\nin his duty to keep his men alive and well fed\nwill at best find himself deserted and worst\nend up with a knife in his back.",
           "cost": 60,
           "startingExp": 0,
@@ -36,6 +37,7 @@
         {
           "id": 2,
           "name": "Sergeant",
+          "icon": "icon-human.png",
           "description": "Some captains are merchants or nobles that\nare looking for a chance at making some extra\nmoney. The brighter captains hire the service\nof a veteran as his sergeant, and leave all the\npractical decision to him. A veteran can be\nrecognised by his many battle-scars and the\ncynicism that marks a soldier of the army.",
           "startingExp": 0,
           "cost": 35,
@@ -59,6 +61,7 @@
         {
           "id": 3,
           "name": "Bergjaeger",
+          "icon": "icon-human.png",
           "description": "The Bergjaeger are trappers and rangers from\nthe mountains that surround the Black Fire\npass. They are experts at moving silently\nthrough terrain and are used as scouts. In\naddition they make good use of animal traps\nto delay or divide a group of enemies.\nBergjager are not professional soldiers and rely more on stealth and cunning than a\nstrong sword-arm to survive",
           "startingExp": 0,
           "cost": 35,
@@ -87,6 +90,7 @@
         {
           "id": 4,
           "name": "Young Blood",
+          "icon": "icon-human.png",
           "description": "Although Empire armies are comprised of\nmature men there are plenty of jobs for\nyouths as there is always a demand for extra\nhelp in the kitchens or as fetchers. Some of\nthese youths actually join a band of\nmercenaries or regiment in pursuit of a\nromantic dream of fame and adventure. Some\nare herdsmen who hoped to find an easier\nway of filling their belly than the hard and\nuncertain business of looking after animals,\nnot to mention that its quite dull! ",
           "startingExp": 0,
           "cost": 15,
@@ -117,6 +121,7 @@
         {
           "id": 1,
           "name": "Mountainguard",
+          "icon": "icon-human.png",
           "description": "The Mountainguard is the famous garrison of\nthe Black Fire Pass that has repelled countless\ngreenskin invasion attempts. Their traditional\nuniform is yellow and black and it’s a merit in\nthe Averland armey to have served a few years\nat the mountain-pass. The Mountain guard\ntrain both with the traditional Imperial\nweapons, the halberd and the sword, and with\nthe crossbow and bow. Veterans are often\nemployed by mercenary warbands who know\nthat their presence will certainly boost their\nchances in the battles to come. Some of these\nveterans advance to become sergeants or even\ncaptains themselves. There are a few\nwarbands that consists solely of\nMountainguard veterans, often from the same\nregiment or the survivors of a great battle.",
           "startingExp": 0,
           "cost": 30,
@@ -140,6 +145,7 @@
         {
           "id": 2,
           "name": "Marksmen",
+          "icon": "icon-human.png",
           "description": "Being a Marksmen is not as simple as picking\nup a bow and try to hit your enemies. A\nMarksman has to train for years to master his\nchosen weapon, Imperial enlisters often visit\narchery competitions to try and enlist a\ncouple of expert archers. Some Marksmen are\ntrained with black powder weapons instead of\nthe traditional bow or crossbow. Marksmen\noften own their own weapons, as the cost of a\nhandgun is as high as hiring the Marksman\nhimself! Thus the Marksmen are not forced to do as much labor as the militia",
           "cost": 25,
           "startingExp": 0,
@@ -199,11 +205,12 @@
     "id": 2,
     "name": "beastmen",
     "icon": "icon-beast.png",
-    "content": {
+    "units": {
       "heroes": [
         {
           "id": 1,
           "name": "Beastmen Chieftain",
+          "icon": "icon-beast.png",
           "description": "Beastmen chieftains have gained their position\nthrough sheer brutality. He leads the Beastmen\nto Mordheim to gather the Chaos Stones to his\nHerdstone",
           "cost": 65,
           "limit": 1,
@@ -218,6 +225,7 @@
         {
           "id": 2,
           "name": "Beastmen Shaman",
+          "icon": "icon-beast.png",
           "description": "Beastmen Shamans are prophets of the Dark\nGods, and the most respected of all the\nBeastmen",
           "cost": 45,
           "limit": 1,
@@ -232,6 +240,7 @@
         {
           "id": 3,
           "name": "Beastmen Shaman",
+          "icon": "icon-beast.png",
           "description": "Beastmen Shamans are prophets of the Dark\nGods, and the most respected of all the\nBeastmen",
           "cost": 45,
           "limit": 1,
