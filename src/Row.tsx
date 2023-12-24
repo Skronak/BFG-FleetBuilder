@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 
 import "./Row.css";
-import {PlayerUnit} from "@/army";
+import {PlayerUnit, Unit} from "@/army";
 
 interface Props {
-    data: PlayerUnit,
     remove,
-    update
+    update,
+    unit: Unit,
 }
 
 function Row(props: Props) {
@@ -16,25 +16,14 @@ function Row(props: Props) {
   const handleClick = evt => {
   };
 
-  const toggleFrom = () => {
-    setIsEditing(!isEditing);
-  };
-
-  const handleUpdate = evt => {
-    evt.preventDefault();
-    toggleFrom();
-  };
+    useEffect(() => {
+    }, []);
 
   let result;
   if (isEditing) {
     result = (
       <div className="Todo">
-        <form className="Todo-edit-form" onSubmit={handleUpdate}>
-{/*
-         <select value={task} onChange={handleChange}>
-            <option value={data.name}>{data.name}-{data.cost} pts</option>
-         </select>
-*/}
+        <form className="Todo-edit-form" onSubmit={props.update}>
           <button>Save</button>
         </form>
       </div>
@@ -42,18 +31,15 @@ function Row(props: Props) {
   } else {
     result = (
       <div className="Todo">
-        <li
-          key={props.data.id}
-        >
-          {props.data.id}
-        </li>
+        <li key={props.unit.id}></li>
+          <p>{props.unit.name}</p>
+          <p>{props.unit.cost}</p>
         <div className="Todo-buttons">
-          <button onClick={toggleFrom}>
-            <i className="fas fa-pen" />
-          </button>
-          <button onClick={handleClick}>
-            <i id={props.data.id} className="fas fa-trash" />
-          </button>
+
+
+      <button onClick={handleClick}>
+        <i className="fas fa-trash" />
+      </button>
         </div>
       </div>
     );

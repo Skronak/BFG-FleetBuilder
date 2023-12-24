@@ -29,6 +29,21 @@ export type Unit = {
     rules: Rule[]
 }
 
+export type UnitRow = {
+    id: number,
+    name: string,
+    icon: string,
+    exp: number,
+    cost: number,
+    maxLimit: number,
+    profil: number[],
+    equipWeapon: boolean,
+    equipArmor: boolean,
+    armor: [],
+    weapon: []
+    rules: Rule[]
+}
+
 export type PlayerArmy = {
     id: number;
     race: number;

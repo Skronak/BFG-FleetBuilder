@@ -60,7 +60,7 @@ function ArmyForm(props: Props) {
     }
   }
 
-  const remove = (id: string) => {
+  const remove = (type: string, id: number) => {
     //setHenchmen(henchmen.filter(todo => todo.id !== id));
   };
 
@@ -95,8 +95,8 @@ function ArmyForm(props: Props) {
             setPlayerArmy({
                 ...playerArmy,
                 units: {
-                  heroes: [val, ...playerArmy.units.heroes],
-                  henchmen: []
+                  heroes: currentUnit.type == 'heroes'  ? [val, ...playerArmy.units.heroes] : playerArmy.units.heroes,
+                  henchmen: currentUnit.type == 'henchmen' ? [val, ...playerArmy.units.henchmen] : playerArmy.units.henchmen
                 }
             }
             );
@@ -117,7 +117,8 @@ function ArmyForm(props: Props) {
                     update={update}
                     remove={remove}
                     key={unit.id}
-                    data={unit}/>
+                    unit={getArmyData().units[entry[0]].filter(elt=>elt.id==unit.id)[0]}
+                  />
                 }
                 </>
             ))
