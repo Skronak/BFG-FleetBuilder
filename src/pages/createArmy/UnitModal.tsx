@@ -7,9 +7,9 @@ import "./unit-modal.css";
 interface Props {
   title: string;
   onClose: () => void;
-  onValidate: (Unit) => void;
+  onValidate: (u: Unit) => void;
   currentElement: Unit;
-  data: TypedUnit;
+  data: TypedUnit;//type sert a rien
 }
 
 export default function UnitModal(props: Props) {
@@ -79,7 +79,22 @@ export default function UnitModal(props: Props) {
           )}
         </div>
         <div className={"modal-unit-container"}>
-          <label>Equipement</label>
+          <label>Weapon</label>
+          {unit && unit.equipArmor && (
+              <div className={"modal-units-select-container"}>
+                {props.data.units
+                    .sort((e1, e2) => e1.cost-e2.cost)
+                    .map(elt =>
+                            <div className="modal-unit-select-container" key={elt.id}>
+                <span className="modal-unit-select" onClick={() => setUnit(elt)}>
+                  <span>{elt.name} - {elt.cost}pts</span>
+                  <input type="checkbox" checked={unit && unit.id===elt.id}></input>
+                </span>
+              </div>
+                    )}
+              </div>
+          )}
+          <label>Armor</label>
           {unit && unit.equipArmor && (
             <input type={"checkbox"}/>
           )}

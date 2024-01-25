@@ -2,6 +2,16 @@ export type Army = {
     id: number,
     name: string,
     icon: string,
+    equipmentSet1: {
+        handToHandWeapons: number[],
+        missileWeapons: number[],
+        armours: number[]
+    },
+    equipmentSet2: {
+        handToHandWeapons: number[],
+        missileWeapons: number[],
+        armours: number[]
+    },
     units: {
         heroes: Unit[],
         henchmen: Unit[]
@@ -15,7 +25,6 @@ export type Rule = {
 
 export type Unit = {
     id: number,
-    type: string,
     name: string,
     icon: string,
     description: string,
@@ -26,7 +35,23 @@ export type Unit = {
     profil: number[],
     equipWeapon: boolean,
     equipArmor: boolean,
+    equipmentSet: string,
     rules: Rule[]
+}
+
+export type Equipement = {
+    id: number,
+    name: string,
+    cost: number,
+    brace: boolean,
+    rule: string
+}
+export type Equipements = {
+    weapons: {
+        handToHand: Equipement[],
+        missileWeapons: Equipement[],
+    },
+    armors: Equipement[]
 }
 
 export type UnitRow = {

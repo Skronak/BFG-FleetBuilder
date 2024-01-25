@@ -1,0 +1,159 @@
+[
+  {
+    "weapons": {
+        "handToHand": [
+          {
+            "id": 1,
+            "name": "dagger",
+            "cost": 2,
+            "brace": false,
+            "rule": ""
+          },
+          {
+            "id": 2,
+            "name": "Mace",
+            "cost": 3,
+            "brace": false,
+            "rule": ""
+          },
+          {
+            "id": 3,
+            "name": "Hammer",
+            "cost": 3,
+            "brace": false,
+            "rule": ""
+          },
+          {
+            "id": 4,
+            "name": "Axe",
+            "cost": 5,
+            "brace": false,
+            "rule": ""
+          },
+          {
+            "id": 5,
+            "name": "Sword",
+            "cost": 10,
+            "brace": false,
+            "rule": ""
+          },
+          {
+            "id": 6,
+            "name": "Morning Star",
+            "cost": 15,
+            "brace": false,
+            "rule": ""
+          },
+          {
+            "id": 7,
+            "name": "Double handed weapon",
+            "cost": 15,
+            "brace": false,
+            "rule": ""
+          },
+          {
+            "id": 8,
+            "name": "Spear",
+            "cost": 10,
+            "brace": false,
+            "rule": ""
+          },
+          {
+            "id": 9,
+            "name": "Halberd",
+            "cost": 10,
+            "brace": false,
+            "rule": ""
+          }
+        ],
+      "missileWeapons": [
+        {
+          "id": 1,
+          "name": "Crossbow",
+          "cost": 25,
+          "brace": false,
+          "rule": ""
+        },
+        {
+          "id": 2,
+          "name": "Pistol",
+          "cost": 25,
+          "brace": true,
+          "rule": ""
+        },
+        {
+          "id": 3,
+          "name": "Duelling pistol",
+          "cost": 25,
+          "brace": true,
+          "rule": ""
+        },
+        {
+          "id": 4,
+          "name": "Bow",
+          "cost": 10,
+          "brace": false,
+          "rule": ""
+        },
+        {
+          "id": 6,
+          "name": "Longbow",
+          "cost": 15,
+          "brace": false,
+          "rule": ""
+        },
+        {
+          "id": 7,
+          "name": "handgun",
+          "cost": 35,
+          "brace": false,
+          "rule": ""
+        },
+        {
+          "id": 8,
+          "name": "Hunting rifle",
+          "cost": 200,
+          "brace": false,
+          "rule": ""
+        }
+      ]
+    },
+    "armors": [
+      {
+        "id": 1,
+        "name": "Light armor",
+        "cost": 20,
+        "brace": false,
+        "rule": ""
+      },
+      {
+        "id": 2,
+        "name": "Heavy armor",
+        "cost": 50,
+        "brace": false,
+        "rule": ""
+      },
+      {
+        "id": 3,
+        "name": "Shield",
+        "cost": 5,
+        "brace": false,
+        "rule": ""
+      },
+      {
+        "id": 4,
+        "name": "Buckler",
+        "cost": 5,
+        "brace": false,
+        "rule": ""
+      },
+      {
+        "id": 5,
+        "name": "Helmet",
+        "cost": 10,
+        "brace": false,
+        "rule": ""
+      }
+    ]
+  }
+]

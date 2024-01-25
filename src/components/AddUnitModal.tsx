@@ -65,7 +65,11 @@ export default function AddUnitModal(props: Props) {
           )}
         </div>
         <div className={"unit-equipement"}>
-          <label>Equipement</label>
+          <label>Weapon</label>
+          {unit && unit.equipWeapon && (
+              <input type={"checkbox"}/>
+          )}
+          <label>Armure</label>
           {unit && unit.equipArmor && (
             <input type={"checkbox"}/>
           )}
