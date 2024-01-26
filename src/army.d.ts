@@ -3,8 +3,10 @@ export type Army = {
     name: string,
     icon: string,
     equipmentSet1: {
-        handToHandWeapons: number[],
-        missileWeapons: number[],
+        "weapons": {
+            handToHandWeapons: number[],
+            missileWeapons: number[],
+        }
         armours: number[]
     },
     equipmentSet2: {
@@ -51,7 +53,7 @@ export type Equipements = {
         handToHand: Equipement[],
         missileWeapons: Equipement[],
     },
-    armors: Equipement[]
+    armours: Equipement[]
 }
 
 export type UnitRow = {

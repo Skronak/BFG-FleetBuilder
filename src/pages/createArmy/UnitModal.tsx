@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {TypedUnit, Unit} from "@/army";
+import {Equipement, Equipements, TypedUnit, Unit} from "@/army";
 import ModalWrapper from "@/components/ModalWrapper";
 import {getAssetUrl} from "@/components/Utils";
 
@@ -10,6 +10,8 @@ interface Props {
   onValidate: (u: Unit) => void;
   currentElement: Unit;
   data: TypedUnit;//type sert a rien
+  equipmentSet1: Equipements;
+  equipmentSet2: Equipements;
 }
 
 export default function UnitModal(props: Props) {

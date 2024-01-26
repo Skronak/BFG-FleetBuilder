@@ -15,6 +15,7 @@ function ArmyForm(props: Props) {
   const [openModal, setOpenModal] = useState(false);
   const [currentUnit, setCurrentUnit] = useState<TypedUnit>()
   const {appData} = useDataStore();
+  const {itemData} = useDataStore();
   const [playerArmy, setPlayerArmy] = useState<PlayerArmy>({
     id: 0,
     name: "",
@@ -48,7 +49,7 @@ function ArmyForm(props: Props) {
     }
   }, []);
 
-  const getArmyData = (): Army => {
+  const getArmyData = (): Army => { // On devrait le stocker une bonne fois pour toute une fois sur l'ecran
     return appData.find(army => army.id === props.armyId) || {
       id: 0,
       name: 'DATA NOT FOUND',
@@ -91,6 +92,8 @@ function ArmyForm(props: Props) {
           title='Ajouter une unite'
           onClose={() => (setOpenModal(false))}
           data={currentUnit!}
+          equipmentSet1={getArmyData().equipmentSet1} // peupler les liste
+          equipmentSet2={}
           onValidate={(val: Unit) => {
             setPlayerArmy({
                 ...playerArmy,
