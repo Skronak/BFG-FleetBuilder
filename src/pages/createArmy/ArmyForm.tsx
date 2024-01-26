@@ -92,8 +92,8 @@ function ArmyForm(props: Props) {
           title='Ajouter une unite'
           onClose={() => (setOpenModal(false))}
           data={currentUnit!}
-          equipmentSet1={getArmyData().equipmentSet1} // peupler les liste
-          equipmentSet2={}
+          // equipmentSet1={getArmyData().equipmentSet1} // peupler les liste
+          // equipmentSet2={}
           onValidate={(val: Unit) => {
             setPlayerArmy({
                 ...playerArmy,
