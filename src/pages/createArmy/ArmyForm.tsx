@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Row from "../../Row";
 import InputAddComponent from "../../components/inputAddComponent";
-import type {Army, PlayerArmy, PlayerUnit, TypedUnit, Unit} from "../../army.d.ts";
+import type {Army, PlayerArmy, TypedUnit, Unit} from "../../army.d.ts";
 import "./armyform.css";
 import {useDataStore} from "@/store/dataStore";
 import UnitModal from "./UnitModal";
@@ -15,13 +15,13 @@ function ArmyForm(props: Props) {
   const [openModal, setOpenModal] = useState(false);
   const [currentUnit, setCurrentUnit] = useState<TypedUnit>()
   const {appData} = useDataStore();
+  const [army, setArmy] = useState<Army>();
   const [playerArmy, setPlayerArmy] = useState<PlayerArmy>({
     id: 0,
     name: "",
     race: 0,
     units: {henchmen: [], heroes: []}
   });
-  const [armyda, setArmyda] = useState();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,7 +31,6 @@ function ArmyForm(props: Props) {
     //   playerArmy.units[k] = [];
     // });
 
-    setArmyda(appData);
     let defaultPlayerArmy = {
       id: 1,// todo add uniq identifier
       race: props.armyId,
@@ -48,19 +47,35 @@ function ArmyForm(props: Props) {
     } else {
       setPlayerArmy(defaultPlayerArmy);
     }
+
+    setArmy(getArmyData());
   }, []);
 
-  const getArmyData = (): Army => { // On devrait le stocker une bonne fois pour toute une fois sur l'ecran
+  const getArmyData = (): Army => {
 
-    return appData.find(army => army.id === props.armyId) || {
+    return appData.find(army => army.id === props.armyId) ?? {
       id: 0,
       name: 'DATA NOT FOUND',
       icon: 'string',
       units: {
         heroes: [],
         henchmen: []
+      },
+      equipmentSet1: {
+        weapons: {
+          handToHand: [],
+          missileWeapons: [],
+        },
+        armours: []
+      },
+      equipmentSet2: {
+        weapons: {
+          handToHand: [],
+          missileWeapons: [],
+        },
+        armours: []
       }
-    }
+    };
   }
 
   const remove = (type: string, id: number) => {
@@ -89,11 +104,13 @@ function ArmyForm(props: Props) {
       <InputAddComponent handleChange={(evt) => setPlayerArmy({...playerArmy, name: evt.target.value})} placeholder={'Warband'}/>
       <div className={"title-cost"}>cost: {Object.keys(playerArmy.units).flatMap(k=>playerArmy.units[k]).map(l=>l.cost).reduce((kv,v)=>kv+v,0)} points</div>
 
-      {openModal && (
+      {openModal && army && (
         <UnitModal
           title='Ajouter une unite'
           onClose={() => (setOpenModal(false))}
           data={currentUnit!}
+          equipmentSet1={army.equipmentSet1}
+          equipmentSet2={army.equipmentSet2}
           // equipmentSet1={getArmyData().equipmentSet1} // peupler les liste
           // equipmentSet2={}
           onValidate={(val: Unit) => {
@@ -108,7 +125,7 @@ function ArmyForm(props: Props) {
           }}
         />
       )}
-      {Object.entries(getArmyData().units).map(entry => (
+      {army && Object.entries(army.units).map(entry => (
         <>
           <h2 className={'army-form-label'}>{entry[0]}
             <button className="button-icon" onClick={() => showModal({type: entry[0], units: entry[1]})}>+</button>
@@ -121,7 +138,7 @@ function ArmyForm(props: Props) {
                     update={update}
                     remove={remove}
                     key={unit.id}
-                    unit={getArmyData().units[entry[0]].filter(elt=>elt.id==unit.id)[0]}
+                    unit={army.units[entry[0]].filter(elt=>elt.id==unit.id)[0]}
                   />
                 }
                 </>

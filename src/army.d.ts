@@ -18,8 +18,8 @@ export type ArmyData = {
         armours: number[]
     },
     units: {
-        heroes: Unit[],
-        henchmen: Unit[]
+        heroes: UnitData[],
+        henchmen: UnitData[]
     };
 }
 
@@ -35,7 +35,7 @@ export type UnitData = {
     profil: number[],
     equipWeapon: boolean,
     equipArmor: boolean,
-    equipmentSet: string,
+    equipmentSet: 'equipmentSet1' | 'equipmentSet2',
     rules: Rule[]
 }
 
@@ -49,22 +49,22 @@ export type EquipementData = {
 
 export type EquipementsData = {
     weapons: {
-        handToHand: Equipement[],
-        missileWeapons: Equipement[],
+        handToHand: EquipementData[],
+        missileWeapons: EquipementData[],
     },
-    armours: Equipement[]
+    armours: EquipementData[]
 }
 
 export type Army = {
     id: number,
     name: string,
     icon: string,
-    equipmentSet1: Equipements,
-    equipmentSet2: Equipements,
     units: {
         heroes: Unit[],
         henchmen: Unit[]
     };
+    equipmentSet1: Equipements,
+    equipmentSet2: Equipements,
 }
 
 export type Rule = {
@@ -84,7 +84,7 @@ export type Unit = {
     profil: number[],
     equipWeapon: boolean,
     equipArmor: boolean,
-    equipmentSet: string,
+    equipmentSet: 'equipmentSet1' | 'equipmentSet2',
     rules: Rule[]
 }
 
