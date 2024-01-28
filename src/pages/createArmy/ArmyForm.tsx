@@ -15,13 +15,13 @@ function ArmyForm(props: Props) {
   const [openModal, setOpenModal] = useState(false);
   const [currentUnit, setCurrentUnit] = useState<TypedUnit>()
   const {appData} = useDataStore();
-  const {itemData} = useDataStore();
   const [playerArmy, setPlayerArmy] = useState<PlayerArmy>({
     id: 0,
     name: "",
     race: 0,
     units: {henchmen: [], heroes: []}
   });
+  const [armyda, setArmyda] = useState();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,6 +31,7 @@ function ArmyForm(props: Props) {
     //   playerArmy.units[k] = [];
     // });
 
+    setArmyda(appData);
     let defaultPlayerArmy = {
       id: 1,// todo add uniq identifier
       race: props.armyId,
@@ -50,6 +51,7 @@ function ArmyForm(props: Props) {
   }, []);
 
   const getArmyData = (): Army => { // On devrait le stocker une bonne fois pour toute une fois sur l'ecran
+
     return appData.find(army => army.id === props.armyId) || {
       id: 0,
       name: 'DATA NOT FOUND',
@@ -85,7 +87,7 @@ function ArmyForm(props: Props) {
   return (
     <div className="builder-form">
       <InputAddComponent handleChange={(evt) => setPlayerArmy({...playerArmy, name: evt.target.value})} placeholder={'Warband'}/>
-      <div className={"title-cost"}>cost: points</div>
+      <div className={"title-cost"}>cost: {Object.keys(playerArmy.units).flatMap(k=>playerArmy.units[k]).map(l=>l.cost).reduce((kv,v)=>kv+v,0)} points</div>
 
       {openModal && (
         <UnitModal
@@ -101,8 +103,7 @@ function ArmyForm(props: Props) {
                   heroes: currentUnit.type == 'heroes'  ? [val, ...playerArmy.units.heroes] : playerArmy.units.heroes,
                   henchmen: currentUnit.type == 'henchmen' ? [val, ...playerArmy.units.henchmen] : playerArmy.units.henchmen
                 }
-            }
-            );
+            });
             setOpenModal(false);
           }}
         />

@@ -1,4 +1,5 @@
-export type Army = {
+//DATA as represented by the JSON file
+export type ArmyData = {
     id: number,
     name: string,
     icon: string,
@@ -10,8 +11,10 @@ export type Army = {
         armours: number[]
     },
     equipmentSet2: {
-        handToHandWeapons: number[],
-        missileWeapons: number[],
+        "weapons": {
+            handToHandWeapons: number[],
+            missileWeapons: number[],
+        }
         armours: number[]
     },
     units: {
@@ -20,9 +23,53 @@ export type Army = {
     };
 }
 
-export type Rule = {
+export type UnitData = {
+    id: number,
     name: string,
-    effect: string
+    icon: string,
+    description: string,
+    startingExp: number,
+    cost: number,
+    minLimit: number,
+    maxLimit: number,
+    profil: number[],
+    equipWeapon: boolean,
+    equipArmor: boolean,
+    equipmentSet: string,
+    rules: Rule[]
+}
+
+export type EquipementData = {
+    id: number,
+    name: string,
+    cost: number,
+    brace: boolean,
+    rule: string
+}
+
+export type EquipementsData = {
+    weapons: {
+        handToHand: Equipement[],
+        missileWeapons: Equipement[],
+    },
+    armours: Equipement[]
+}
+
+export type Army = {
+    id: number,
+    name: string,
+    icon: string,
+    equipmentSet1: Equipements,
+    equipmentSet2: Equipements,
+    units: {
+        heroes: Unit[],
+        henchmen: Unit[]
+    };
+}
+
+export type Rule = {
+    name?: string,
+    effect?: string
 };
 
 export type Unit = {
@@ -48,6 +95,7 @@ export type Equipement = {
     brace: boolean,
     rule: string
 }
+
 export type Equipements = {
     weapons: {
         handToHand: Equipement[],
