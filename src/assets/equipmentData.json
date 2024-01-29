@@ -1,68 +1,163 @@
 {
   "weapons": {
+    "rules": [
+        {
+          "name": "hand",
+          "hand": "-1 strength, +1 to enemy armour save"
+        },
+        {
+          "name": "dagger",
+          "effect": "+1 to enemy armour save"
+        },
+        {
+          "name": "concussion",
+          "effect": "injury roll of 2-4 is treated as stunned"
+        },
+      {
+        "name": "cuttingEdge",
+        "effect": "-1 to enemy save"
+      },
+      {
+        "name": "parry",
+        "effect": "When opponent roll to hit, roll a D6, if the roll is highter than the highter roll of the opponent then the blow is parryed. Cannot parry enemy with double strength than yours"
+      },
+      {
+        "name": "heavy",
+        "effect": "the strength bonus only apply the first turn"
+      },
+      {
+        "name": "difficultToUse",
+        "effect": "Cannot use a second weapon or a buckler"
+      },
+      {
+        "name": "twoHanded",
+        "effect": "+1 to armour save against shooting if the model has a shield, cannot use a shield, buckler or\nadditional weapon in close combat."
+      },
+      {
+        "name": "strikeFirst",
+        "effect": "Strike first in the first turn"
+      },
+      {
+        "name": "cavalryBonus",
+        "effect": "Mounted warrior only, +1 strength when he charge (only that turn)"
+      },
+      {
+        "name": "cavalryWeapon",
+        "effect": "injury roll of 2-4 is treated as stunned"
+      },
+      {
+        "name": "Unwieldy",
+        "effect": "A warrior with a spear may only use a shield or a buckler in his other hand. He may not use a second weapon"
+      },
+      {
+        "name": "concussion",
+        "effect": "injury roll of 2-4 is treated as stunned"
+      }
+    ],
       "handToHand": [
+        {
+          "id": 0,
+          "name": "hand",
+          "cost": 0,
+          "brace": false,
+          "specialRule": "",
+          "rule": ["hand"]
+        },
         {
           "id": 1,
           "name": "dagger",
           "cost": 2,
           "brace": false,
-          "rule": ""
+          "specialRule": "",
+          "rule": ["dagger"]
         },
         {
           "id": 2,
           "name": "Mace",
           "cost": 3,
           "brace": false,
-          "rule": ""
+          "specialRule": "",
+          "rule": ["concussion"]
         },
         {
           "id": 3,
           "name": "Hammer",
           "cost": 3,
           "brace": false,
-          "rule": ""
+          "specialRule": "",
+          "rule": "concussion"
         },
         {
           "id": 4,
           "name": "Axe",
           "cost": 5,
           "brace": false,
-          "rule": ""
+          "specialRule": "",
+          "rule": "cuttingEdge"
         },
         {
           "id": 5,
           "name": "Sword",
           "cost": 10,
           "brace": false,
-          "rule": ""
+          "specialRule": "",
+          "rule": "parry"
         },
         {
           "id": 6,
           "name": "Morning Star",
           "cost": 15,
           "brace": false,
-          "rule": ""
+          "specialRule": "",
+          "rule": ["heavy","difficultToUse"]
         },
         {
           "id": 7,
           "name": "Double handed weapon",
           "cost": 15,
           "brace": false,
-          "rule": ""
+          "specialRule": "",
+          "rule": [""]
         },
         {
           "id": 8,
           "name": "Spear",
           "cost": 10,
           "brace": false,
-          "rule": ""
+          "specialRule": "",
+          "rule": ["strikeFirst", "unwieldy"]
         },
         {
           "id": 9,
           "name": "Halberd",
           "cost": 10,
           "brace": false,
-          "rule": ""
+          "specialRule": "+1 strength",
+          "rule": ["twoHanded"]
+        },
+        {
+          "id": 10,
+          "name": "Staff",
+          "cost": 10,
+          "brace": false,
+         "specialRule": "",
+          "rule": ["concussion"]
+        },
+        {
+          "id": 11,
+          "name": "Club",
+          "cost": 10,
+          "brace": false,
+          "specialRule": "",
+          "rule": ["concussion"]
+        },
+        {
+          "id": 11,
+          "name": "Flail",
+          "cost": 10,
+          "brace": false,
+          "specialRule": "+2 strength",
+          "rule": ["heavy", "twoHanded"]
         }
       ],
     "missileWeapons": [
@@ -71,49 +166,56 @@
         "name": "Crossbow",
         "cost": 25,
         "brace": false,
-        "rule": ""
+      "specialRule": "",
+        "rule": [""]
       },
       {
         "id": 2,
         "name": "Pistol",
         "cost": 25,
         "brace": true,
-        "rule": ""
+        "specialRule": "",
+        "rule": [""]
       },
       {
         "id": 3,
         "name": "Duelling pistol",
         "cost": 25,
         "brace": true,
-        "rule": ""
+        "specialRule": "",
+        "rule": [""]
       },
       {
         "id": 4,
         "name": "Bow",
         "cost": 10,
         "brace": false,
-        "rule": ""
+        "specialRule": "",
+        "rule": [""]
       },
       {
         "id": 6,
         "name": "Longbow",
         "cost": 15,
         "brace": false,
-        "rule": ""
+        "specialRule": "",
+        "rule": [""]
       },
       {
         "id": 7,
         "name": "handgun",
         "cost": 35,
         "brace": false,
-        "rule": ""
+       "specialRule": "",
+        "rule": [""]
       },
       {
         "id": 8,
         "name": "Hunting rifle",
         "cost": 200,
         "brace": false,
-        "rule": ""
+        "specialRule": "",
+        "rule": [""]
       }
     ]
   },
@@ -123,35 +225,40 @@
       "name": "Light armor",
       "cost": 20,
       "brace": false,
-      "rule": ""
+      "specialRule": "",
+      "rule": [""]
     },
     {
       "id": 2,
       "name": "Heavy armor",
       "cost": 50,
       "brace": false,
-      "rule": ""
+      "specialRule": "",
+      "rule": [""]
     },
     {
       "id": 3,
       "name": "Shield",
       "cost": 5,
       "brace": false,
-      "rule": ""
+      "specialRule": "",
+      "rule": [""]
     },
     {
       "id": 4,
       "name": "Buckler",
       "cost": 5,
       "brace": false,
-      "rule": ""
+      "specialRule": "",
+      "rule": [""]
     },
     {
       "id": 5,
       "name": "Helmet",
       "cost": 10,
       "brace": false,
-      "rule": ""
+      "specialRule": "",
+      "rule": [""]
     }
   ]
 }

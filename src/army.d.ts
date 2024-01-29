@@ -44,7 +44,7 @@ export type EquipementData = {
     name: string,
     cost: number,
     brace: boolean,
-    rule: string
+    rule: string[]
 }
 
 export type EquipementsData = {
