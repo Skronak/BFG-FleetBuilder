@@ -6,48 +6,44 @@ import "./armyform.css";
 import {useDataStore} from "@/store/dataStore";
 import UnitModal from "./UnitModal";
 import {useNavigate} from "react-router-dom";
-import Button from "@mui/material/Button";
 import {Modal, Typography} from "@mui/material";
 import Box from "@mui/material/Box";
+import {useLocalStorageDataStore} from "@/store/localStorageDataStore";
 
 interface Props {
-  armyId: number;
+  armyId?: number;
+  raceId?: number;
 }
 
 function ArmyForm(props: Props) {
-  const [openModal, setOpenModal] = useState(false);
   const [currentUnit, setCurrentUnit] = useState<TypedUnit>()
   const {appData} = useDataStore();
+  const {playerArmies, setPlayerArmies} = useLocalStorageDataStore();
+
   const [army, setArmy] = useState<Army>();
   const [playerArmy, setPlayerArmy] = useState<PlayerArmy>({
     id: 0,
     name: "",
     race: 0,
+    cost: 750,
     units: {henchmen: [], heroes: []}
   });
   const navigate = useNavigate();
 
   useEffect(() => {
-    const dataLS = localStorage.getItem('playerArmies');
-    // let keys: string[] = Object.keys(getArmyData().units);
-    // keys.map(k=> {
-    //   playerArmy.units[k] = [];
-    // });
-
-    let defaultPlayerArmy = {
-      id: 1,// todo add uniq identifier
-      race: props.armyId,
-      name: '',
-      units: {
-        heroes: [],
-        henchmen: []
-      }
-    };
-
-    if (!dataLS) {
-//      setPlayerArmy(JSON.parse(dataLS));// todo save non compatible => reconstruire l'objet
-      // TODO => initialiser player army depuis localStorage
+    if(!!props.armyId) {
+      let playerArmy = playerArmies.find(army => army.id = props.armyId!);
+      //TODO init
     } else {
+      let defaultPlayerArmy = {
+        id: Math.max(...playerArmies.map(army=> +army.id))+1,
+        race: props.raceId,
+        name: '',
+        units: {
+          heroes: [],
+          henchmen: []
+        }
+      };
       setPlayerArmy(defaultPlayerArmy);
     }
 
@@ -56,7 +52,7 @@ function ArmyForm(props: Props) {
 
   const getArmyData = (): Army => {
 
-    return appData.find(army => army.id === props.armyId) ?? {
+    return appData.find(army => army.id === props.raceId) ?? {
       id: 0,
       name: 'DATA NOT FOUND',
       icon: 'string',
@@ -85,31 +81,31 @@ function ArmyForm(props: Props) {
     //setHenchmen(henchmen.filter(todo => todo.id !== id));
   };
 
-  const update = (id: string, updtedTask: any) => {
-    /*const units = henchmen.map(todo => {
-      if (todo.id === id) {
-        return {...todo, task: updtedTask};
-      }
-      return todo;
-    });
-    setHenchmen(units);
-    */
+  const edit = (type: string, id: number) => {
+    //setHenchmen(henchmen.filter(todo => todo.id !== id));
   };
+
+  const saveArmy=() => {
+    let newPlayerArmies = [...playerArmies, playerArmy];
+    setPlayerArmies(newPlayerArmies);
+    localStorage.setItem('playerArmies', JSON.stringify(newPlayerArmies));
+
+    navigate('/list');
+  }
+
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const showModal = (data: TypedUnit) => {
-    console.log(data);
     setOpen(true);
     setCurrentUnit(data);
-    setOpenModal(true);
   }
   const style = {
     position: 'absolute' as 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
+    width: '80%',
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
@@ -154,27 +150,6 @@ function ArmyForm(props: Props) {
       </div>
       )}
 
-      {openModal && false && army && (
-        <UnitModal
-          title='Ajouter une unite'
-          onClose={() => (setOpenModal(false))}
-          data={currentUnit!}
-          equipmentSet1={army.equipmentSet1}
-          equipmentSet2={army.equipmentSet2}
-          // equipmentSet1={getArmyData().equipmentSet1} // peupler les liste
-          // equipmentSet2={}
-          onValidate={(val: Unit) => {
-            setPlayerArmy({
-                ...playerArmy,
-                units: {
-                  heroes: currentUnit.type == 'heroes'  ? [val, ...playerArmy.units.heroes] : playerArmy.units.heroes,
-                  henchmen: currentUnit.type == 'henchmen' ? [val, ...playerArmy.units.henchmen] : playerArmy.units.henchmen
-                }
-            });
-            setOpenModal(false);
-          }}
-        />
-      )}
       {army && Object.entries(army.units).map(entry => (
         <>
           <h2 className={'army-form-label'}>{entry[0]}
@@ -185,7 +160,7 @@ function ArmyForm(props: Props) {
                 <>
                 {
                   <Row
-                    update={update}
+                    update={edit}
                     remove={remove}
                     key={unit.id}
                     unit={army.units[entry[0]].filter(elt=>elt.id==unit.id)[0]}
@@ -197,7 +172,7 @@ function ArmyForm(props: Props) {
         </>
       ))}
       <button onClick={()=>navigate('/list')}>Annuler</button>
-      <button>Enregistrer</button>
+      <button onClick={()=>saveArmy()}>Enregistrer</button>
     </div>
   )
 }

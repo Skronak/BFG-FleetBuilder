@@ -106,25 +106,11 @@ export type Equipements = {
     armours: Equipement[]
 }
 
-export type UnitRow = {
-    id: number,
-    name: string,
-    icon: string,
-    exp: number,
-    cost: number,
-    maxLimit: number,
-    profil: number[],
-    equipWeapon: boolean,
-    equipArmor: boolean,
-    armor: [],
-    weapon: []
-    rules: Rule[]
-}
-
 export type PlayerArmy = {
     id: number;
     race: number;
     name: string;
+    cost: number;
     units: {
         heroes: PlayerUnit[];
         henchmen: PlayerUnit[];
@@ -133,13 +119,9 @@ export type PlayerArmy = {
 
 export type PlayerUnit = {
     id: number;
+    type: string;
     weapon: number[];
     armor: number[];
-}
-
-export type ItemOption = {
-    id: string;
-    value: string;
 }
 
 export type PlayerArmyLS = {

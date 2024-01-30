@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import {Equipements, TypedUnit, Unit} from "@/army";
-import ModalWrapper from "@/components/ModalWrapper";
 import {getAssetUrl, getPortraitAssetUrl} from "@/components/Utils";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import "./unit-modal.css";
@@ -13,8 +12,6 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 interface Props {
     title: string;
     onClose: () => void;
@@ -27,21 +24,15 @@ interface Props {
 export default function UnitModal(props: Props) {
     const [unit, setUnit] = useState<Unit>();
     const [checked, setChecked] = React.useState([0]);
-    type Anchor = 'top' | 'left' | 'bottom' | 'right';
-
+    type Anchor = 'left'|'right';
     const [state, setState] = React.useState({
-        top: false,
         left: false,
-        bottom: false,
         right: false,
     });
+
     useEffect(() => {
         setUnit(props.data.units[0]);
     }, []);
-
-    const handleChange = (evt: { target: { value: any; }; }) => {
-        setUnit(props.data.units.find(elt => elt.id === +evt.target.value));
-    };
 
     const handleToggle = (value: number) => () => {
         const currentIndex = checked.indexOf(value);
@@ -71,7 +62,7 @@ export default function UnitModal(props: Props) {
 
         const list = (anchor: Anchor) => (
             <Box
-                sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 450 }}
+                sx={{ width: '70%' }}
                 role="presentation"
                 // onClick={toggleDrawer(anchor, false)}
                 onKeyDown={toggleDrawer(anchor, false)}
@@ -156,14 +147,23 @@ export default function UnitModal(props: Props) {
                         aria-controls="panel3-content"
                         id="panel3-header"
                     >
-                        {unit && unit.name}
+                        Background
                     </AccordionSummary>
                     <AccordionDetails>
-                        <span>Description</span>
                         <div className={"modal-unit-description modal-unit-container"}>
                             {unit && unit.description}
                         </div>
-                        <span>Profil</span>
+                    </AccordionDetails>
+                </Accordion>
+                <Accordion defaultExpanded>
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon/>}
+                        aria-controls="panel3-content"
+                        id="panel3-header"
+                    >
+                        Unit Profil
+                    </AccordionSummary>
+                    <AccordionDetails>
                         <div className={"modal-unit-container"}>
                             {unit && unit.profil.length !== 0 && (
                                 <table className={"modal-unit-profil-table"}>
@@ -209,12 +209,12 @@ export default function UnitModal(props: Props) {
                                 aria-controls="panel1-content"
                                 id="panel1-header"
                             >
-                                Weapons
+                                Additionnal Equipement
                             </AccordionSummary>
                             <AccordionDetails>
                                 {(['left'] as const).map((anchor) => (
                                     <React.Fragment key={anchor}>
-                                        <Button onClick={toggleDrawer(anchor, true)}>Add weapon</Button>
+                                        <Button onClick={toggleDrawer(anchor, true)}>Edit weapons</Button>
                                         <Drawer
                                             anchor={anchor}
                                             open={state[anchor]}
