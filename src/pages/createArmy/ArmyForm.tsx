@@ -6,6 +6,9 @@ import "./armyform.css";
 import {useDataStore} from "@/store/dataStore";
 import UnitModal from "./UnitModal";
 import {useNavigate} from "react-router-dom";
+import Button from "@mui/material/Button";
+import {Modal, Typography} from "@mui/material";
+import Box from "@mui/material/Box";
 
 interface Props {
   armyId: number;
@@ -92,19 +95,66 @@ function ArmyForm(props: Props) {
     setHenchmen(units);
     */
   };
-
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   const showModal = (data: TypedUnit) => {
     console.log(data);
+    setOpen(true);
     setCurrentUnit(data);
     setOpenModal(true);
   }
-
+  const style = {
+    position: 'absolute' as 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
   return (
     <div className="builder-form">
       <InputAddComponent handleChange={(evt) => setPlayerArmy({...playerArmy, name: evt.target.value})} placeholder={'Warband'}/>
       <div className={"title-cost"}>cost: {Object.keys(playerArmy.units).flatMap(k=>playerArmy.units[k]).map(l=>l.cost).reduce((kv,v)=>kv+v,0)} points</div>
 
-      {openModal && army && (
+      {army && (
+      <div>
+        <Modal
+            open={open}
+            sx={{ 'z-index': 1 }}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <UnitModal
+                title='Ajouter une unite'
+                onClose={() => (handleClose)}
+                data={currentUnit!}
+                equipmentSet1={army.equipmentSet1}
+                equipmentSet2={army.equipmentSet2}
+                // equipmentSet1={getArmyData().equipmentSet1} // peupler les liste
+                // equipmentSet2={}
+                onValidate={(val: Unit) => {
+                  setPlayerArmy({
+                    ...playerArmy,
+                    units: {
+                      heroes: currentUnit.type == 'heroes'  ? [val, ...playerArmy.units.heroes] : playerArmy.units.heroes,
+                      henchmen: currentUnit.type == 'henchmen' ? [val, ...playerArmy.units.henchmen] : playerArmy.units.henchmen
+                    }
+                  });
+                  setOpen(false);
+                }}
+            />
+          </Box>
+        </Modal>
+      </div>
+      )}
+
+      {openModal && false && army && (
         <UnitModal
           title='Ajouter une unite'
           onClose={() => (setOpenModal(false))}

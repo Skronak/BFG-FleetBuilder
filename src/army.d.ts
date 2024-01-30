@@ -35,7 +35,7 @@ export type UnitData = {
     profil: number[],
     equipWeapon: boolean,
     equipArmor: boolean,
-    equipmentSet: 'equipmentSet1' | 'equipmentSet2',
+    equipmentSet: string, //'equipmentSet1' | 'equipmentSet2'
     rules: Rule[]
 }
 
@@ -44,7 +44,8 @@ export type EquipementData = {
     name: string,
     cost: number,
     brace: boolean,
-    rule: string[]
+    rule: string,
+    specialRules: Rule[]
 }
 
 export type EquipementsData = {
@@ -93,7 +94,8 @@ export type Equipement = {
     name: string,
     cost: number,
     brace: boolean,
-    rule: string
+    rule: string,
+    specialRules: Rule[]
 }
 
 export type Equipements = {

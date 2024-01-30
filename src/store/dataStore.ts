@@ -36,6 +36,6 @@ const transformArmyFromDataTo = (data: ArmyData[], items: EquipementsData): Army
 }
 
 export const useDataStore = create<DataStoreType>((set) => ({
-    appData: transformArmyFromDataTo(data, items),//transformation
+    appData: transformArmyFromDataTo(data, items),
     setAppData: (newData: Army[]) => set({appData: newData}),
 }));
