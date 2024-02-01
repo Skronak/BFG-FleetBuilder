@@ -22,7 +22,10 @@ interface Props {
 }
 
 export default function UnitModal(props: Props) {
-    const [unit, setUnit] = useState<Unit>();
+    const [currentUnit, setCurrentUnit] = useState<Unit>();
+/*
+    const [equipement, setEquipement] = useState<Equipement>();
+*/
     const [checked, setChecked] = React.useState([0]);
     type Anchor = 'left'|'right';
     const [state, setState] = React.useState({
@@ -31,7 +34,7 @@ export default function UnitModal(props: Props) {
     });
 
     useEffect(() => {
-        setUnit(props.data.units[0]);
+        setCurrentUnit(props.data.units[0]);//selectionne la premier unite
     }, []);
 
     const handleToggle = (value: number) => () => {
@@ -46,6 +49,10 @@ export default function UnitModal(props: Props) {
 
         setChecked(newChecked);
     };
+
+    const handleToggleWeapon = (value: number) => () => {
+    }
+
         const toggleDrawer =
             (anchor: Anchor, open: boolean) =>
                 (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -64,7 +71,6 @@ export default function UnitModal(props: Props) {
             <Box
                 sx={{ width: '70%' }}
                 role="presentation"
-                // onClick={toggleDrawer(anchor, false)}
                 onKeyDown={toggleDrawer(anchor, false)}
             >
                 <Divider />
@@ -132,10 +138,10 @@ export default function UnitModal(props: Props) {
                     .sort((e1, e2) => e1.cost - e2.cost)
                     .map(elt =>
                             <div className="modal-unit-select-container" key={elt.id}>
-              <span className="modal-unit-select" onClick={() => setUnit(elt)}>
+              <span className="modal-unit-select" onClick={() => setCurrentUnit(elt)}>
                 <span>{elt.name} - {elt.cost}gc</span>
                 <img className={"modal-unit-icon"} src={getPortraitAssetUrl(elt.icon)}/>
-                <input type="checkbox" checked={unit && unit.id === elt.id}></input>
+                <input type="checkbox" checked={currentUnit && currentUnit.id === elt.id}></input>
               </span>
                             </div>
                     )}
@@ -151,7 +157,7 @@ export default function UnitModal(props: Props) {
                     </AccordionSummary>
                     <AccordionDetails>
                         <div className={"modal-unit-description modal-unit-container"}>
-                            {unit && unit.description}
+                            {currentUnit && currentUnit.description}
                         </div>
                     </AccordionDetails>
                 </Accordion>
@@ -165,7 +171,7 @@ export default function UnitModal(props: Props) {
                     </AccordionSummary>
                     <AccordionDetails>
                         <div className={"modal-unit-container"}>
-                            {unit && unit.profil.length !== 0 && (
+                            {currentUnit && currentUnit.profil.length !== 0 && (
                                 <table className={"modal-unit-profil-table"}>
                                     <tr>
                                         <th>M</th>
@@ -179,21 +185,21 @@ export default function UnitModal(props: Props) {
                                         <th>Ld</th>
                                     </tr>
                                     <tr>
-                                        <td>{unit.profil[0]}</td>
-                                        <td>{unit.profil[1]}</td>
-                                        <td>{unit.profil[2]}</td>
-                                        <td>{unit.profil[3]}</td>
-                                        <td>{unit.profil[4]}</td>
-                                        <td>{unit.profil[5]}</td>
-                                        <td>{unit.profil[6]}</td>
-                                        <td>{unit.profil[7]}</td>
-                                        <td>{unit.profil[8]}</td>
+                                        <td>{currentUnit.profil[0]}</td>
+                                        <td>{currentUnit.profil[1]}</td>
+                                        <td>{currentUnit.profil[2]}</td>
+                                        <td>{currentUnit.profil[3]}</td>
+                                        <td>{currentUnit.profil[4]}</td>
+                                        <td>{currentUnit.profil[5]}</td>
+                                        <td>{currentUnit.profil[6]}</td>
+                                        <td>{currentUnit.profil[7]}</td>
+                                        <td>{currentUnit.profil[8]}</td>
                                     </tr>
                                 </table>)}
                         </div>
                         <span>Rules</span>
                         <div className={"modal-unit-container modal-unit-rules"}>
-                            {unit && unit.rules && unit.rules.map(rule =>
+                            {currentUnit && currentUnit.rules && currentUnit.rules.map(rule =>
                                 <div>{rule.name} : {rule.effect}</div>
                             )}
                         </div>
@@ -202,7 +208,7 @@ export default function UnitModal(props: Props) {
 
                 <div className={"modal-unit-container"}>
 
-                    {unit && unit.equipWeapon && (
+                    {currentUnit && currentUnit.equipWeapon && (
                         <Accordion>
                             <AccordionSummary
                                 expandIcon={<ExpandMoreIcon/>}
@@ -225,7 +231,7 @@ export default function UnitModal(props: Props) {
                                     </React.Fragment>
                                 ))}
                                 <div className={"modal-units-select-container"}>
-                                    {(unit.equipmentSet === 'equipmentSet1' ? (
+                                    {(currentUnit.equipmentSet === 'equipmentSet1' ? (
                                         <div className={'weapon-bloc'}>
                                             {props.equipmentSet1.weapons.handToHand.map(elt =>
                                                     <div className="modal-weapon-select-container" key={elt.id}>
@@ -249,7 +255,7 @@ export default function UnitModal(props: Props) {
                                                 <div className="modal-weapon-select-container" key={elt.id}>
                           <span className="modal-weapon-select">
                             <span>{elt.name} - {elt.cost}pts</span>
-                            <input type="checkbox" checked={unit && unit.id === elt.id}></input>
+                            <input type="checkbox" checked={currentUnit && currentUnit.id === elt.id}></input>
                           </span>
                                                 </div>
                                         )
@@ -272,10 +278,10 @@ export default function UnitModal(props: Props) {
                         </Drawer>
                     </React.Fragment>
                 ))}
-                <label>Total Cost : {unit? unit.cost : 0}</label>
+                <label>Total Cost : {currentUnit? currentUnit.cost : 0}</label>
             </div>
             <button onClick={props.onClose}>Annuler</button>
-            <button onClick={() => props.onValidate(unit!)}>Ajouter</button>
+            <button onClick={() => props.onValidate(currentUnit!)}>Ajouter</button>
         </div>
     )
 }

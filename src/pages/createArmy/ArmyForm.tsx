@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Row from "../../Row";
 import InputAddComponent from "../../components/inputAddComponent";
-import type {Army, PlayerArmy, TypedUnit, Unit} from "../../army.d.ts";
+import type {Army, PlayerArmy, PlayerUnit, TypedUnit, Unit} from "../../army.d.ts";
 import "./armyform.css";
 import {useDataStore} from "@/store/dataStore";
 import UnitModal from "./UnitModal";
@@ -19,13 +19,13 @@ function ArmyForm(props: Props) {
   const [currentUnit, setCurrentUnit] = useState<TypedUnit>()
   const {appData} = useDataStore();
   const {playerArmies, setPlayerArmies} = useLocalStorageDataStore();
-
+  const [open, setOpen] = React.useState(false);
   const [army, setArmy] = useState<Army>();
   const [playerArmy, setPlayerArmy] = useState<PlayerArmy>({
     id: 0,
     name: "",
     race: 0,
-    cost: 750,
+    cost: 0,
     units: {henchmen: [], heroes: []}
   });
   const navigate = useNavigate();
@@ -39,6 +39,7 @@ function ArmyForm(props: Props) {
         id: Math.max(...playerArmies.map(army=> +army.id))+1,
         race: props.raceId,
         name: '',
+        cost: 0,
         units: {
           heroes: [],
           henchmen: []
@@ -93,13 +94,21 @@ function ArmyForm(props: Props) {
     navigate('/list');
   }
 
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const showModal = (data: TypedUnit) => {
     setOpen(true);
     setCurrentUnit(data);
   }
+
+  const unitToPlayerUnit = (unit: Unit, type: string, weapons: number[],armor: number[]) => {
+    return {
+      id: unit.id,
+      type: type,
+      weapon: weapons,
+      armor: armor
+    }
+  }
+
   const style = {
     position: 'absolute' as 'absolute',
     top: '50%',
@@ -132,14 +141,12 @@ function ArmyForm(props: Props) {
                 data={currentUnit!}
                 equipmentSet1={army.equipmentSet1}
                 equipmentSet2={army.equipmentSet2}
-                // equipmentSet1={getArmyData().equipmentSet1} // peupler les liste
-                // equipmentSet2={}
-                onValidate={(val: Unit) => {
+                onValidate={(val: Unit, weapons: number[], armor: number[]) => {
                   setPlayerArmy({
                     ...playerArmy,
                     units: {
-                      heroes: currentUnit.type == 'heroes'  ? [val, ...playerArmy.units.heroes] : playerArmy.units.heroes,
-                      henchmen: currentUnit.type == 'henchmen' ? [val, ...playerArmy.units.henchmen] : playerArmy.units.henchmen
+                      heroes: currentUnit!.type == 'heroes'  ? [unitToPlayerUnit(val, 'heroes', weapons, armor), ...playerArmy.units.heroes] : playerArmy.units.heroes,
+                      henchmen: currentUnit!.type == 'henchmen' ? [val, ...playerArmy.units.henchmen] : playerArmy.units.henchmen
                     }
                   });
                   setOpen(false);

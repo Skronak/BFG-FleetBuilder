@@ -124,22 +124,6 @@ export type PlayerUnit = {
     armor: number[];
 }
 
-export type PlayerArmyLS = {
-    id: number;
-    race: number;
-    name: string;
-    units: {
-        heroes: PlayerUnitLS[];
-        henchmen: PlayerUnitLS[];
-    }
-}
-
-export type PlayerUnitLS = {
-    id: number;
-    weapon: number[];
-    armor: number[];
-}
-
 export type TypedUnit = {
     type: string,
     units: Unit[];
