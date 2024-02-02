@@ -36,19 +36,17 @@ export default function UnitModal(props: Props) {
 
     useEffect(() => {
         if (!!props.playerUnit) {
-/*
-            setCurrentUnit(props.data.units.filter(unit => unit.id = props.playerUnit.id)); => TOUT METTRE A PLAT CEST CHIANT
+            setCurrentUnit(props.data.units.filter(unit => unit.id = props.playerUnit.id));
             if(currentUnit?.equipmentSet=='equipmentSet1') {
-                setWeapons(props.equipmentSet1.weapons.props.playerUnit.weapon);
-                setArmors(props.playerUnit.armor);
-*/
-/*
+                setWeapons(props.equipmentSet1.weapons);
+                setArmors(props.equipmentSet1.armours);
             } else {
+                setWeapons(props.equipmentSet2.weapons);
+                setArmors(props.equipmentSet2.armours);
             }
-*/
 
         } else {
-            setCurrentUnit(props.data.units[0]);//selectionne la premier unite
+            setCurrentUnit(props.data.units[0]);//selectionne la premiere unite
         }
     }, []);
 
@@ -90,7 +88,7 @@ export default function UnitModal(props: Props) {
             >
                 <Divider />
                 <List sx={{ width: '100%', maxWidth: 420, bgcolor: 'background.paper' }}>
-                    {props.equipmentSet1.weapons.handToHand.map((elt, index) => {
+                    {props.equipmentSet1.weapons.map((elt, index) => {
                         const labelId = `checkbox-list-label-${elt.id}`;
 
                         return (
@@ -248,7 +246,7 @@ export default function UnitModal(props: Props) {
                                 <div className={"modal-units-select-container"}>
                                     {(currentUnit.equipmentSet === 'equipmentSet1' ? (
                                         <div className={'weapon-bloc'}>
-                                            {props.equipmentSet1.weapons.handToHand.map(elt =>
+                                            {props.equipmentSet1.weapons.map(elt =>
                                                     <div className="modal-weapon-select-container" key={elt.id}>
                                                       <span className="modal-weapon-select">
                                                         <span>{elt.name} - {elt.cost}pts</span>
@@ -256,17 +254,9 @@ export default function UnitModal(props: Props) {
                                                       </span>
                                                     </div>
                                             )}
-                                            {props.equipmentSet1.weapons.missileWeapons.map(elt =>
-                                                    <div className="modal-weapon-select-container" key={elt.id}>
-                        <span className="modal-weapon-select">
-                          <span>{elt.name} - {elt.cost}pts</span>
-                          <input type="checkbox"></input>
-                        </span>
-                                                    </div>
-                                            )}
-                                        </div>
+                                           </div>
                                     ) : (
-                                        props.equipmentSet2.weapons.handToHand.map(elt =>
+                                        props.equipmentSet2.weapons.map(elt =>
                                                 <div className="modal-weapon-select-container" key={elt.id}>
                           <span className="modal-weapon-select">
                             <span>{elt.name} - {elt.cost}pts</span>

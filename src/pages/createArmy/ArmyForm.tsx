@@ -21,6 +21,7 @@ function ArmyForm(props: Props) {
   const {playerArmies, setPlayerArmies} = useLocalStorageDataStore();
   const [open, setOpen] = React.useState(false);
   const [army, setArmy] = useState<Army>();
+  const [selectedUnit, setSelectedUnit] = useState<PlayerUnit>();
   const [playerArmy, setPlayerArmy] = useState<PlayerArmy>({
     id: 0,
     name: "",
@@ -82,8 +83,9 @@ function ArmyForm(props: Props) {
     //setHenchmen(henchmen.filter(todo => todo.id !== id));
   };
 
-  const edit = (type: string, id: number) => {
-    //setHenchmen(henchmen.filter(todo => todo.id !== id));
+  const edit = (id: PlayerUnit, unit: TypedUnit) => {
+    setSelectedUnit(id);
+    showModal(unit)
   };
 
   const saveArmy=() => {
@@ -141,6 +143,7 @@ function ArmyForm(props: Props) {
                 data={currentUnit!}
                 equipmentSet1={army.equipmentSet1}
                 equipmentSet2={army.equipmentSet2}
+                playerUnit={selectedUnit?selectedUnit:undefined}
                 onValidate={(val: Unit, weapons: number[], armor: number[]) => {
                   setPlayerArmy({
                     ...playerArmy,
@@ -163,11 +166,11 @@ function ArmyForm(props: Props) {
             <button className="button-icon" onClick={() => showModal({type: entry[0], units: entry[1]})}>+</button>
           </h2>
           {playerArmy.units && playerArmy.units[entry[0]]
-              .map((unit) => (
+              .map((unit: PlayerUnit) => (
                 <>
                 {
                   <Row
-                    update={edit}
+                    update={()=>edit(unit, army.units[entry[0]].filter(elt=>elt.id==unit.id)[0])}
                     remove={remove}
                     key={unit.id}
                     unit={army.units[entry[0]].filter(elt=>elt.id==unit.id)[0]}

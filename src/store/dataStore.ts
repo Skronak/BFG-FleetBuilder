@@ -10,17 +10,50 @@ type DataStoreType = {
 const transformArmyDataToArmy = (data: ArmyData[], items: EquipementsData): Army[] => {
 
     return data.map(army => {
-        let weaponsSet1 = {
-            handToHand: items.weapons.handToHand.filter(eq => army.equipmentSet1.weapons.handToHandWeapons.includes(eq.id)),
-            missileWeapons: items.weapons.missileWeapons.filter(eq => army.equipmentSet1.weapons.missileWeapons.includes(eq.id))
-        };
-        let weaponsSet2 = {
-            handToHand: items.weapons.handToHand.filter(eq => army.equipmentSet2.weapons.handToHandWeapons.includes(eq.id)),
-            missileWeapons: items.weapons.missileWeapons.filter(eq => army.equipmentSet2.weapons.missileWeapons.includes(eq.id))
-        };
+        let weaponsSet1 =
+            items.weapons.handToHand.filter(eq => army.equipmentSet1.weapons.handToHandWeapons.includes(eq.id)).map(weapon => {
+                return {
+                    ...weapon,
+                    type: 'handToHand'
+                }
+            }).concat(
+            items.weapons.missileWeapons.filter(eq => army.equipmentSet1.weapons.missileWeapons.includes(eq.id)).map(weapon => {
+                return {
+                    ...weapon,
+                    type: 'missileWeapons'
+                }
+            }))
+
+        let weaponsSet2 =
+            items.weapons.handToHand.filter(eq => army.equipmentSet2.weapons.handToHandWeapons.includes(eq.id)).map(weapon => {
+                return {
+                    ...weapon,
+                    type: 'handToHand'
+                }
+            }).concat(
+            items.weapons.missileWeapons.filter(eq => army.equipmentSet2.weapons.missileWeapons.includes(eq.id)).map(weapon => {
+                return {
+                    ...weapon,
+                    type: 'missileWeapons'
+                }
+            }));
+
         let armorSet1 = items.armours.filter(eq => army.equipmentSet1.armours.includes(eq.id));
         let armorSet2 = items.armours.filter(eq => army.equipmentSet1.armours.includes(eq.id));
 
+        let heroes = army.units.heroes.map(unit => {
+            return {
+                ...unit,
+                type: 'heroes'
+            }
+        });
+
+        let henchmen = army.units.henchmen.map(unit => {
+            return {
+                ...unit,
+                type: 'henchmen'
+            }
+        });
 /*        Object.entries(army.units).forEach(units => {
             units[1] = units[1].map(elt=> {
                 return {
@@ -31,6 +64,10 @@ const transformArmyDataToArmy = (data: ArmyData[], items: EquipementsData): Army
 
         return ({
             ...army,
+            units: {
+                heroes: heroes,
+                henchmen: henchmen
+            },
             equipmentSet1: {
                 weapons: weaponsSet1,
                 armours: armorSet1

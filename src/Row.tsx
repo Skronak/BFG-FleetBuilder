@@ -6,6 +6,7 @@ import {PlayerUnit, Unit} from "@/army";
 interface Props {
     remove,
     update,
+    edit,
     unit: Unit,
 }
 
@@ -37,7 +38,7 @@ function Row(props: Props) {
         <div className="Todo-buttons">
 
 
-      <button onClick={handleClick}>
+      <button onClick={props.edit}>edit
         <i className="fas fa-trash" />
       </button>
         </div>

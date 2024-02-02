@@ -100,10 +100,7 @@ export type Equipement = {
 }
 
 export type Equipements = {
-    weapons: {
-        handToHand: Equipement[],
-        missileWeapons: Equipement[],
-    },
+    weapons: Equipement[]
     armours: Equipement[]
 }
 
