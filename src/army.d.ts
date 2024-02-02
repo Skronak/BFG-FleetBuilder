@@ -73,9 +73,10 @@ export type Rule = {
     effect?: string
 };
 
-export type Unit = {
+export type Unit = { //Ajoute le type ici
     id: number,
     name: string,
+    type?: string,
     icon: string,
     description: string,
     startingExp: number,

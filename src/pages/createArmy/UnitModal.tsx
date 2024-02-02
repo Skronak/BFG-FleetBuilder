@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Equipements, TypedUnit, Unit} from "@/army";
+import {Equipement, Equipements, PlayerUnit, TypedUnit, Unit} from "@/army";
 import {getAssetUrl, getPortraitAssetUrl} from "@/components/Utils";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import "./unit-modal.css";
@@ -15,7 +15,8 @@ import ListItemText from '@mui/material/ListItemText';
 interface Props {
     title: string;
     onClose: () => void;
-    onValidate: (u: Unit) => void;
+    onValidate: (u: Unit, w: number[], a: number[]) => void;
+    playerUnit?: PlayerUnit;
     data: TypedUnit;
     equipmentSet1: Equipements;
     equipmentSet2: Equipements;
@@ -23,9 +24,9 @@ interface Props {
 
 export default function UnitModal(props: Props) {
     const [currentUnit, setCurrentUnit] = useState<Unit>();
-/*
-    const [equipement, setEquipement] = useState<Equipement>();
-*/
+    const [weapons, setWeapons] = useState<Equipement[]>();
+    const [armors, setArmors] = useState<Equipement[]>();
+
     const [checked, setChecked] = React.useState([0]);
     type Anchor = 'left'|'right';
     const [state, setState] = React.useState({
@@ -34,7 +35,21 @@ export default function UnitModal(props: Props) {
     });
 
     useEffect(() => {
-        setCurrentUnit(props.data.units[0]);//selectionne la premier unite
+        if (!!props.playerUnit) {
+/*
+            setCurrentUnit(props.data.units.filter(unit => unit.id = props.playerUnit.id)); => TOUT METTRE A PLAT CEST CHIANT
+            if(currentUnit?.equipmentSet=='equipmentSet1') {
+                setWeapons(props.equipmentSet1.weapons.props.playerUnit.weapon);
+                setArmors(props.playerUnit.armor);
+*/
+/*
+            } else {
+            }
+*/
+
+        } else {
+            setCurrentUnit(props.data.units[0]);//selectionne la premier unite
+        }
     }, []);
 
     const handleToggle = (value: number) => () => {
@@ -281,7 +296,7 @@ export default function UnitModal(props: Props) {
                 <label>Total Cost : {currentUnit? currentUnit.cost : 0}</label>
             </div>
             <button onClick={props.onClose}>Annuler</button>
-            <button onClick={() => props.onValidate(currentUnit!)}>Ajouter</button>
+            <button onClick={() => props.onValidate(currentUnit!, )}>Ajouter</button>
         </div>
     )
 }

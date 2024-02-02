@@ -1,13 +1,13 @@
 import {create} from 'zustand'
 import data from "@/assets/armyData.json";
 import items from "@/assets/equipmentData.json";
-import {Army, ArmyData, EquipementsData} from "@/army";
+import {Army, ArmyData, EquipementsData, UnitData} from "@/army";
 
 type DataStoreType = {
   appData: Army[];
   setAppData: (data: Army[]) => void;
 }
-const transformArmyFromDataTo = (data: ArmyData[], items: EquipementsData): Army[] => {
+const transformArmyDataToArmy = (data: ArmyData[], items: EquipementsData): Army[] => {
 
     return data.map(army => {
         let weaponsSet1 = {
@@ -20,6 +20,14 @@ const transformArmyFromDataTo = (data: ArmyData[], items: EquipementsData): Army
         };
         let armorSet1 = items.armours.filter(eq => army.equipmentSet1.armours.includes(eq.id));
         let armorSet2 = items.armours.filter(eq => army.equipmentSet1.armours.includes(eq.id));
+
+/*        Object.entries(army.units).forEach(units => {
+            units[1] = units[1].map(elt=> {
+                return {
+                    ...elt,
+                    type: units[0]
+                }});
+        })*/
 
         return ({
             ...army,
@@ -36,6 +44,6 @@ const transformArmyFromDataTo = (data: ArmyData[], items: EquipementsData): Army
 }
 
 export const useDataStore = create<DataStoreType>((set) => ({
-    appData: transformArmyFromDataTo(data, items),
+    appData: transformArmyDataToArmy(data, items),
     setAppData: (newData: Army[]) => set({appData: newData}),
 }));

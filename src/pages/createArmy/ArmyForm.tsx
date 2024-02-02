@@ -146,7 +146,7 @@ function ArmyForm(props: Props) {
                     ...playerArmy,
                     units: {
                       heroes: currentUnit!.type == 'heroes'  ? [unitToPlayerUnit(val, 'heroes', weapons, armor), ...playerArmy.units.heroes] : playerArmy.units.heroes,
-                      henchmen: currentUnit!.type == 'henchmen' ? [val, ...playerArmy.units.henchmen] : playerArmy.units.henchmen
+                      henchmen: currentUnit!.type == 'henchmen' ? [unitToPlayerUnit(val, 'henchmen', weapons, armor), ...playerArmy.units.henchmen] : playerArmy.units.henchmen
                     }
                   });
                   setOpen(false);
