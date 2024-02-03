@@ -286,7 +286,7 @@ export default function UnitModal(props: Props) {
                 <label>Total Cost : {currentUnit? currentUnit.cost : 0}</label>
             </div>
             <button onClick={props.onClose}>Annuler</button>
-            {/*<button onClick={() => props.onValidate(currentUnit!, )}>Ajouter</button>*/}
+            <button onClick={() => props.onValidate(currentUnit!, [], [])}>Ajouter</button>
         </div>
     )
 }

@@ -81,9 +81,9 @@ function ArmyForm(props: Props) {
     //setHenchmen(henchmen.filter(todo => todo.id !== id));
   };
 
-  const edit = () => {
-    // setselectedPlayerUnit(playerUnit);
-    // showModal(unit)
+  const edit = (unit: PlayerUnit) => {
+    setselectedPlayerUnit(unit);
+    showModal(unit.type);
   };
 
   const saveArmy=() => {
@@ -147,7 +147,8 @@ function ArmyForm(props: Props) {
                 data={modalUnitRefs}
                 equipmentSet1={armyRef.equipmentSet1}
                 equipmentSet2={armyRef.equipmentSet2}
-                playerUnit={selectedPlayerUnit?selectedPlayerUnit:undefined}
+                playerUnit={selectedPlayerUnit ? selectedPlayerUnit : undefined}
+                edit={()=>edit}
 /*                onEdit={}*/
                 onValidate={(val: UnitRef, weapons: number[], armor: number[]) => {
                   setPlayerArmy({
@@ -163,20 +164,20 @@ function ArmyForm(props: Props) {
       )}
 
       {armyRef && unitType.map(type => (
-        <>
+        <div key={type}>
           <h2 className={'armyRef-form-label'}>{type}
             <button className="button-icon" onClick={() => showModal(type)}>+</button>
           </h2>
           {playerArmy.units && playerArmy.units.filter(unit=>unit.type==type).map((unit: PlayerUnit) => (
-                  <Row
-                    edit={edit}
-                    remove={remove}
-                    key={unit.id}
-                    unit={armyRef.units.filter(elt=>elt.id==unit.id)[0]}
-                  />
+            <Row
+              edit={edit}
+              remove={remove}
+              key={unit.id}
+              unit={armyRef.units.filter(elt=>elt.id == unit.id_unit)[0]}
+            />
             ))
           }
-        </>
+        </div>
       ))}
       <button onClick={()=>navigate('/list')}>Annuler</button>
       <button onClick={()=>saveArmy()}>Enregistrer</button>

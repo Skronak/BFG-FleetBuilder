@@ -15,8 +15,7 @@ export function Row(props: Props) {
   }, []);
 
   return (
-    <div className="Todo">
-      <li key={props.unit.id}></li>
+    <div className="Todo" key={props.unit.id}>
       <p>{props.unit.name}</p>
       <p>{props.unit.cost}</p>
 
