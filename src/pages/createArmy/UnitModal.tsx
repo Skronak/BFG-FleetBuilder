@@ -39,7 +39,7 @@ export default function UnitModal(props: Props) {
 
     useEffect(() => {
         if (!!props.playerUnit) {
-            setCurrentUnit(props.data.filter(unit => unit.id = props.playerUnit.id)[0]);
+            setCurrentUnit(props.data.filter(unit => unit.id === props.playerUnit.id)[0]);
             if(currentUnit?.equipmentSet=='equipmentSet1') {
                 setAvailableWeapons(props.equipmentSet1.weapons);
                 setAvailableArmors(props.equipmentSet1.armours);
@@ -51,6 +51,8 @@ export default function UnitModal(props: Props) {
             setSelectedArmors(props.playerUnit.armor);
         } else {
             setCurrentUnit(props.data[0]);//selectionne la premiere unite
+            setSelectedWeapons([]);
+            setSelectedArmors([]);
         }
     }, []);
 
@@ -258,7 +260,7 @@ export default function UnitModal(props: Props) {
                                                     <div className="modal-weapon-select-container" key={elt.id}>
                                                       <span className="modal-weapon-select">
                                                         <span>{elt.name} - {elt.cost}pts</span>
-                                                        <input onClick={handleToggleWeapon(elt.id)} checked={selectedWeapons.includes(elt.id)} type="checkbox"></input>
+                                                        <input onClick={handleToggleWeapon(elt.id)} checked={selectedWeapons && selectedWeapons.includes(elt.id)} type="checkbox"></input>
                                                       </span>
                                                     </div>
                                             )}

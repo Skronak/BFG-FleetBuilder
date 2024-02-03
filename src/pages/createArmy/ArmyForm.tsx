@@ -82,10 +82,8 @@ function ArmyForm(props: Props) {
   };
 
   const edit = (unit: PlayerUnit) => {
-/*
     setSelectedPlayerUnit(unit);
     showModal(unit.type);
-*/
   };
 
   const saveArmy=() => {
@@ -150,7 +148,6 @@ function ArmyForm(props: Props) {
                 equipmentSet1={armyRef.equipmentSet1}
                 equipmentSet2={armyRef.equipmentSet2}
                 playerUnit={selectedPlayerUnit ? selectedPlayerUnit : undefined}
-                edit={()=>edit}
 /*                onEdit={}*/
                 onValidate={(val: UnitRef, weapons: number[], armor: number[]) => {
                   setPlayerArmy({
@@ -175,6 +172,7 @@ function ArmyForm(props: Props) {
               edit={edit}
               remove={remove}
               key={unit.id}
+              playerUnit={unit}
               unit={armyRef.units.filter(elt=>elt.id == unit.id_unit)[0]}
             />
             ))
