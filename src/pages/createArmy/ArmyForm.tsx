@@ -29,13 +29,13 @@ function ArmyForm(props: Props) {
   const {playerArmies, setPlayerArmies} = useLocalStorageDataStore();
   const [open, setOpen] = React.useState(false);
   const [armyRef, setArmyRef] = useState<ArmyRef>();
-  const [selectedPlayerUnit, setselectedPlayerUnit] = useState<PlayerUnit>();
+  const [selectedPlayerUnit, setSelectedPlayerUnit] = useState<PlayerUnit>();
   const [playerArmy, setPlayerArmy] = useState<PlayerArmy>(defaultPlayerArmy);
   const navigate = useNavigate();
   let unitType = ['heroes', 'henchmen'];
 
   useEffect(() => {
-    let raceId = 0
+    let raceId = props.raceId;
     if(!!props.armyId) { // EDIT MODE
       let army = playerArmies.find(army => army.id === props.armyId!);
       if (army) {
@@ -46,7 +46,7 @@ function ArmyForm(props: Props) {
       setPlayerArmy({
         ...playerArmy,
         id: playerArmies.length > 0 ? Math.max(...playerArmies.map(army=> +army.id))+1 : 1,
-        race: props.raceId,
+        race: raceId,
       });
     }
 
@@ -82,8 +82,10 @@ function ArmyForm(props: Props) {
   };
 
   const edit = (unit: PlayerUnit) => {
-    setselectedPlayerUnit(unit);
+/*
+    setSelectedPlayerUnit(unit);
     showModal(unit.type);
+*/
   };
 
   const saveArmy=() => {
@@ -107,7 +109,7 @@ function ArmyForm(props: Props) {
 
   const unitToPlayerUnit = (unit: UnitRef, weapons: number[], armor: number[]): PlayerUnit => {
     return {
-      id: Math.max(...playerArmy.units.map(unit=>unit.id))+1,
+      id: playerArmy.units && playerArmy.units.length > 0 ? Math.max(...playerArmy.units.map(unit=>unit.id))+1 : 1,
       id_unit: unit.id,
       type: unit.type,
       weapon: weapons,

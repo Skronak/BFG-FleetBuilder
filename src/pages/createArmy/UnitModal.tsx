@@ -25,8 +25,10 @@ interface Props {
 
 export default function UnitModal(props: Props) {
     const [currentUnit, setCurrentUnit] = useState<UnitRef>();
-    const [weapons, setWeapons] = useState<Equipement[]>();
-    const [armors, setArmors] = useState<Equipement[]>();
+    const [availableWeapons, setAvailableWeapons] = useState<Equipement[]>([]);
+    const [availableArmors, setAvailableArmors] = useState<Equipement[]>([]);
+    const [selectedWeapons, setSelectedWeapons] = useState<number[]>([]);
+    const [selectedArmors, setSelectedArmors] = useState<number[]>([]);
 
     const [checked, setChecked] = React.useState([0]);
     type Anchor = 'left'|'right';
@@ -39,13 +41,14 @@ export default function UnitModal(props: Props) {
         if (!!props.playerUnit) {
             setCurrentUnit(props.data.filter(unit => unit.id = props.playerUnit.id)[0]);
             if(currentUnit?.equipmentSet=='equipmentSet1') {
-                setWeapons(props.equipmentSet1.weapons);
-                setArmors(props.equipmentSet1.armours);
+                setAvailableWeapons(props.equipmentSet1.weapons);
+                setAvailableArmors(props.equipmentSet1.armours);
             } else {
-                setWeapons(props.equipmentSet2.weapons);
-                setArmors(props.equipmentSet2.armours);
+                setAvailableWeapons(props.equipmentSet2.weapons);
+                setAvailableArmors(props.equipmentSet2.armours);
             }
-
+            setSelectedWeapons(props.playerUnit.weapon);
+            setSelectedArmors(props.playerUnit.armor);
         } else {
             setCurrentUnit(props.data[0]);//selectionne la premiere unite
         }
@@ -65,85 +68,90 @@ export default function UnitModal(props: Props) {
     };
 
     const handleToggleWeapon = (value: number) => () => {
+        if (selectedWeapons.includes(value)) {
+            setSelectedWeapons(selectedWeapons.filter(id => id !== value));
+        } else{
+            setSelectedWeapons([...selectedWeapons, value]);
+        }
     }
 
-        const toggleDrawer =
-            (anchor: Anchor, open: boolean) =>
-                (event: React.KeyboardEvent | React.MouseEvent) => {
-                    if (
-                        event.type === 'keydown' &&
-                        ((event as React.KeyboardEvent).key === 'Tab' ||
-                            (event as React.KeyboardEvent).key === 'Shift')
-                    ) {
-                        return;
-                    }
+    const toggleDrawer =
+        (anchor: Anchor, open: boolean) =>
+            (event: React.KeyboardEvent | React.MouseEvent) => {
+                if (
+                    event.type === 'keydown' &&
+                    ((event as React.KeyboardEvent).key === 'Tab' ||
+                        (event as React.KeyboardEvent).key === 'Shift')
+                ) {
+                    return;
+                }
 
-                    setState({ ...state, [anchor]: open });
-                };
+                setState({ ...state, [anchor]: open });
+    };
 
-        const list = (anchor: Anchor) => (
-            <Box
-                sx={{ width: '70%' }}
-                role="presentation"
-                onKeyDown={toggleDrawer(anchor, false)}
-            >
-                <Divider />
-                <List sx={{ width: '100%', maxWidth: 420, bgcolor: 'background.paper' }}>
-                    {props.equipmentSet1.weapons.map((elt, index) => {
-                        const labelId = `checkbox-list-label-${elt.id}`;
+    const list = (anchor: Anchor) => (
+        <Box
+            sx={{ width: '70%' }}
+            role="presentation"
+            onKeyDown={toggleDrawer(anchor, false)}
+        >
+            <Divider />
+            <List sx={{ width: '100%', maxWidth: 420, bgcolor: 'background.paper' }}>
+                {props.equipmentSet1.weapons.map((elt, index) => {
+                    const labelId = `checkbox-list-label-${elt.id}`;
 
-                        return (
-                            <ListItem
-                                alignItems="flex-start"
-                                disablePadding
-                            >
-                                <ListItemButton role={undefined} onClick={handleToggle(elt.id)} dense>
-                                    <ListItemIcon>
-                                        <Checkbox
-                                            edge="start"
-                                            checked={checked.indexOf(elt.id) !== -1}
-                                            tabIndex={-1}
-                                            disableRipple
-                                            inputProps={{'aria-labelledby': labelId}}
-                                            sx={{ }}
-                                        />
-                                    </ListItemIcon>
-                                    <ListItemText id={labelId}
-                                                  primary={`${elt.name} - ${elt.cost}gc`}
-                                                  secondary={
-                                                      <React.Fragment>
-                                                          <Typography
-                                                              sx={{ display: 'inline' }}
-                                                              component="span"
-                                                              variant="body2"
-                                                              color="text.primary"
-                                                          >
-                                                              {elt.rule}
-                                                          </Typography>
-                                                          <Divider variant="inset" component="li" />
-                                                          {elt.specialRules.map(rule=> {
-                                                              return (
-                                                                  <span>
-                                                                  <Typography
-                                                                      sx={{ display: 'inline' }}
-                                                                      component="span"
-                                                                      variant="body2"
-                                                                      color="text.primary"
-                                                                  >
-                                                                      {rule.name}:
-                                                                  </Typography>
-                                                                  {rule.effect}
-    </span>
-                                                          )
-                                                              })}
-                                                      </React.Fragment>
-                                                  }/>
-                                </ListItemButton>
-                            </ListItem>);
-                    })}
-            </List>
-            </Box>
-        );
+                    return (
+                        <ListItem
+                            alignItems="flex-start"
+                            disablePadding
+                        >
+                            <ListItemButton role={undefined} onClick={handleToggle(elt.id)} dense>
+                                <ListItemIcon>
+                                    <Checkbox
+                                        edge="start"
+                                        checked={checked.indexOf(elt.id) !== -1}
+                                        tabIndex={-1}
+                                        disableRipple
+                                        inputProps={{'aria-labelledby': labelId}}
+                                        sx={{ }}
+                                    />
+                                </ListItemIcon>
+                                <ListItemText id={labelId}
+                                              primary={`${elt.name} - ${elt.cost}gc`}
+                                              secondary={
+                                                  <React.Fragment>
+                                                      <Typography
+                                                          sx={{ display: 'inline' }}
+                                                          component="span"
+                                                          variant="body2"
+                                                          color="text.primary"
+                                                      >
+                                                          {elt.rule}
+                                                      </Typography>
+                                                      <Divider variant="inset" component="li" />
+                                                      {elt.specialRules.map(rule=> {
+                                                          return (
+                                                              <span>
+                                                              <Typography
+                                                                  sx={{ display: 'inline' }}
+                                                                  component="span"
+                                                                  variant="body2"
+                                                                  color="text.primary"
+                                                              >
+                                                                  {rule.name}:
+                                                              </Typography>
+                                                              {rule.effect}
+</span>
+                                                      )
+                                                          })}
+                                                  </React.Fragment>
+                                              }/>
+                            </ListItemButton>
+                        </ListItem>);
+                })}
+        </List>
+        </Box>
+    );
 
     return (
         <div title={props.title}>
@@ -250,22 +258,21 @@ export default function UnitModal(props: Props) {
                                                     <div className="modal-weapon-select-container" key={elt.id}>
                                                       <span className="modal-weapon-select">
                                                         <span>{elt.name} - {elt.cost}pts</span>
-                                                        <input type="checkbox"></input>
+                                                        <input onClick={handleToggleWeapon(elt.id)} checked={selectedWeapons.includes(elt.id)} type="checkbox"></input>
                                                       </span>
                                                     </div>
                                             )}
                                            </div>
                                     ) : (
                                         props.equipmentSet2.weapons.map(elt =>
-                                                <div className="modal-weapon-select-container" key={elt.id}>
-                          <span className="modal-weapon-select">
-                            <span>{elt.name} - {elt.cost}pts</span>
-                            <input type="checkbox" checked={currentUnit && currentUnit.id === elt.id}></input>
-                          </span>
-                                                </div>
+                                            <div className="modal-weapon-select-container" key={elt.id}>
+                                              <span className="modal-weapon-select">
+                                                <span>{elt.name} - {elt.cost}pts</span>
+                                                <input type="checkbox" checked={currentUnit && currentUnit.id === elt.id}></input>
+                                              </span>
+                                            </div>
                                         )
-                                    ))
-                                    }
+                                    ))}
                                 </div>
                             </AccordionDetails>
                         </Accordion>
@@ -286,7 +293,7 @@ export default function UnitModal(props: Props) {
                 <label>Total Cost : {currentUnit? currentUnit.cost : 0}</label>
             </div>
             <button onClick={props.onClose}>Annuler</button>
-            <button onClick={() => props.onValidate(currentUnit!, [], [])}>Ajouter</button>
+            <button onClick={() => props.onValidate(currentUnit!, selectedWeapons, selectedArmors)}>Enregistrer</button>
         </div>
     )
 }

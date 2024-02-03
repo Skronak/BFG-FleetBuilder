@@ -102,7 +102,7 @@ export type Equipements = {
 
 export type PlayerArmy = {
     id: number;
-    race: number;x
+    race: number;
     name: string;
     cost: number;
     units: PlayerUnit[];
