@@ -1,4 +1,4 @@
-import {Army} from "@/army";
+import {ArmyRef} from "@/army";
 
 export function getAssetUrl(name: string) {
     return new URL(`/src/assets/${name}`, import.meta.url).href;
@@ -9,7 +9,7 @@ export function getPortraitAssetUrl(name: string) {
 }
 
 
-export function getArmyIcon(data: Army[], id: number){
+export function getArmyIcon(data: ArmyRef[], id: number){
     let iconName = data.filter(item => item.id == id).map(item => item.icon)[0];
     return getAssetUrl(iconName);
 }

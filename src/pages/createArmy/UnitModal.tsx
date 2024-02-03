@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Equipement, Equipements, PlayerUnit, TypedUnit, Unit} from "@/army";
+import {Equipement, Equipements, PlayerUnit, UnitRef} from "@/army";
 import {getAssetUrl, getPortraitAssetUrl} from "@/components/Utils";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import "./unit-modal.css";
@@ -12,18 +12,19 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+
 interface Props {
     title: string;
     onClose: () => void;
-    onValidate: (u: Unit, w: number[], a: number[]) => void;
+    onValidate: (u: UnitRef, w: number[], a: number[]) => void;
     playerUnit?: PlayerUnit;
-    data: TypedUnit;
+    data: UnitRef[];
     equipmentSet1: Equipements;
     equipmentSet2: Equipements;
 }
 
 export default function UnitModal(props: Props) {
-    const [currentUnit, setCurrentUnit] = useState<Unit>();
+    const [currentUnit, setCurrentUnit] = useState<UnitRef>();
     const [weapons, setWeapons] = useState<Equipement[]>();
     const [armors, setArmors] = useState<Equipement[]>();
 
@@ -36,7 +37,7 @@ export default function UnitModal(props: Props) {
 
     useEffect(() => {
         if (!!props.playerUnit) {
-            setCurrentUnit(props.data.units.filter(unit => unit.id = props.playerUnit.id));
+            setCurrentUnit(props.data.filter(unit => unit.id = props.playerUnit.id)[0]);
             if(currentUnit?.equipmentSet=='equipmentSet1') {
                 setWeapons(props.equipmentSet1.weapons);
                 setArmors(props.equipmentSet1.armours);
@@ -46,7 +47,7 @@ export default function UnitModal(props: Props) {
             }
 
         } else {
-            setCurrentUnit(props.data.units[0]);//selectionne la premiere unite
+            setCurrentUnit(props.data[0]);//selectionne la premiere unite
         }
     }, []);
 
@@ -147,8 +148,7 @@ export default function UnitModal(props: Props) {
     return (
         <div title={props.title}>
             <div className={"modal-units-select-container"}>
-                {props.data.units
-                    .sort((e1, e2) => e1.cost - e2.cost)
+                {props.data.sort((e1, e2) => e1.cost - e2.cost)
                     .map(elt =>
                             <div className="modal-unit-select-container" key={elt.id}>
               <span className="modal-unit-select" onClick={() => setCurrentUnit(elt)}>
@@ -286,7 +286,7 @@ export default function UnitModal(props: Props) {
                 <label>Total Cost : {currentUnit? currentUnit.cost : 0}</label>
             </div>
             <button onClick={props.onClose}>Annuler</button>
-            <button onClick={() => props.onValidate(currentUnit!, )}>Ajouter</button>
+            {/*<button onClick={() => props.onValidate(currentUnit!, )}>Ajouter</button>*/}
         </div>
     )
 }

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Unit} from "@/army";
+import {UnitRef} from "@/army";
 import ModalWrapper from "@/components/ModalWrapper";
 
 interface Props {
@@ -7,11 +7,11 @@ interface Props {
   onClose: () => void;
   onValidate: (str: any) => void;
   currentElement?: {};
-  data: Unit[];
+  data: UnitRef[];
 }
 
 export default function AddUnitModal(props: Props) {
-  const [unit, setUnit] = useState<Unit>();
+  const [unit, setUnit] = useState<UnitRef>();
 
   useEffect(() => {
     setUnit(props.data[0]);

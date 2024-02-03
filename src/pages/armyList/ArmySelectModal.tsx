@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Army, Unit} from "@/army";
+import {ArmyRef, UnitRef} from "@/army";
 import ModalWrapper from "@/components/ModalWrapper";
 import {getAssetUrl, getArmyIcon} from "@/components/Utils";
 import './armySelectModal.css';
@@ -8,12 +8,12 @@ import {useNavigate} from "react-router-dom";
 interface Props {
     onClose: () => void;
     currentElement?: {};
-    data: Army[];
+    data: ArmyRef[];
     title: string;
 }
 
 export default function ArmySelectModal(props: Props) {
-    const [unit, setUnit] = useState<Unit>();
+    const [unit, setUnit] = useState<UnitRef>();
     const navigate = useNavigate();
 
     return (

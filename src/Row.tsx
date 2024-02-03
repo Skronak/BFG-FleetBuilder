@@ -1,51 +1,33 @@
 import React, {useEffect, useState} from "react";
 
 import "./Row.css";
-import {PlayerUnit, Unit} from "@/army";
+import {PlayerUnit, UnitRef} from "@/army";
 
 interface Props {
-    remove,
-    update,
-    edit,
-    unit: Unit,
+  remove,
+  edit,
+  unit: UnitRef,
 }
 
-function Row(props: Props) {
+export function Row(props: Props) {
 
-  const [isEditing, setIsEditing] = useState(false);
+  useEffect(() => {
+  }, []);
 
-  const handleClick = evt => {
-  };
+  return (
+    <div className="Todo">
+      <li key={props.unit.id}></li>
+      <p>{props.unit.name}</p>
+      <p>{props.unit.cost}</p>
 
-    useEffect(() => {
-    }, []);
+      <div className="Todo-buttons">
+        <button onClick={props.edit(props.unit)}>edit
+          <i className="fas fa-trash"/>
+        </button>
 
-  let result;
-  if (isEditing) {
-    result = (
-      <div className="Todo">
-        <form className="Todo-edit-form" onSubmit={props.update}>
-          <button>Save</button>
-        </form>
       </div>
-    );
-  } else {
-    result = (
-      <div className="Todo">
-        <li key={props.unit.id}></li>
-          <p>{props.unit.name}</p>
-          <p>{props.unit.cost}</p>
-        <div className="Todo-buttons">
-
-
-      <button onClick={props.edit}>edit
-        <i className="fas fa-trash" />
-      </button>
-        </div>
-      </div>
-    );
-  }
-  return result;
+    </div>
+  );
 }
 
-export default Row;
+export default Row

@@ -1,5 +1,5 @@
 import {create} from 'zustand'
-import {Army, PlayerArmy} from "@/army";
+import {ArmyRef, PlayerArmy} from "@/army";
 
 type DataStoreType = {
     playerArmies: PlayerArmy[];

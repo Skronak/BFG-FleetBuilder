@@ -3,6 +3,7 @@ export type ArmyData = {
     id: number,
     name: string,
     icon: string,
+    units: UnitData[],
     equipmentSet1: {
         "weapons": {
             handToHandWeapons: number[],
@@ -17,15 +18,12 @@ export type ArmyData = {
         }
         armours: number[]
     },
-    units: {
-        heroes: UnitData[],
-        henchmen: UnitData[]
-    };
 }
 
 export type UnitData = {
     id: number,
     name: string,
+    type: string
     icon: string,
     description: string,
     startingExp: number,
@@ -56,27 +54,19 @@ export type EquipementsData = {
     armours: EquipementData[]
 }
 
-export type Army = {
+export type ArmyRef = {
     id: number,
     name: string,
     icon: string,
-    units: {
-        heroes: Unit[],
-        henchmen: Unit[]
-    };
+    units: UnitRef[],
     equipmentSet1: Equipements,
     equipmentSet2: Equipements,
 }
 
-export type Rule = {
-    name?: string,
-    effect?: string
-};
-
-export type Unit = { //Ajoute le type ici
+export type UnitRef = {
     id: number,
     name: string,
-    type?: string,
+    type: string,
     icon: string,
     description: string,
     startingExp: number,
@@ -86,9 +76,15 @@ export type Unit = { //Ajoute le type ici
     profil: number[],
     equipWeapon: boolean,
     equipArmor: boolean,
-    equipmentSet: 'equipmentSet1' | 'equipmentSet2',
+    equipmentSet: string,
     rules: Rule[]
 }
+
+export type Rule = {
+    name?: string,
+    effect?: string
+};
+
 
 export type Equipement = {
     id: number,
@@ -106,23 +102,16 @@ export type Equipements = {
 
 export type PlayerArmy = {
     id: number;
-    race: number;
+    race: number;x
     name: string;
     cost: number;
-    units: {
-        heroes: PlayerUnit[];
-        henchmen: PlayerUnit[];
-    }
+    units: PlayerUnit[];
 }
 
 export type PlayerUnit = {
     id: number;
+    id_unit: number;
     type: string;
     weapon: number[];
     armor: number[];
-}
-
-export type TypedUnit = {
-    type: string,
-    units: Unit[];
 }

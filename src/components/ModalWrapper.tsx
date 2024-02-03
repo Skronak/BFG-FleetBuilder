@@ -1,6 +1,6 @@
 import React, {PropsWithChildren, useState} from "react";
 import "./Modal.css";
-import {Unit} from "@/army";
+import {UnitRef} from "@/army";
 
 interface Props extends PropsWithChildren {
     onClose: () => void;
@@ -8,7 +8,7 @@ interface Props extends PropsWithChildren {
 }
 //https://codepen.io/chriscoyier/pen/MeJWoM
 export default function ModalWrapper(props: Props) {
-    const [unit, setUnit] = useState<Unit>();
+    const [unit, setUnit] = useState<UnitRef>();
 
     return (
         <div className="modal-underlay" onClick={props.onClose}>
