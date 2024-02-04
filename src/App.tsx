@@ -8,8 +8,8 @@ import HomePage from "./Home";
 const App: React.FC = () => {
     const navigate = useNavigate();
     return (
-        <div className='App'>
-            <Header></Header>
+        <div>
+            <Header/>
                 <Routes>
                     <Route path="/" element={<HomePage/>} />
                     <Route path="/home" element={<HomePage/>} />
@@ -18,7 +18,6 @@ const App: React.FC = () => {
                     <Route path="/edit/:idArmy" element={<ArmyPage/>} />
                     <Route path="*" element={<Navigate to="/"/>} />
                 </Routes>
-            <button onClick={()=>navigate(-1)}>Précedent</button>
         </div>
     );
 };export default App;

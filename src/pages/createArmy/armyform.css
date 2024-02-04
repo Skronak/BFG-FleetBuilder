@@ -1,9 +1,13 @@
 .container-form {
-    margin: 4rem auto;
-    padding: 2rem 3rem 3rem;
+    padding: 2rem 2% 3rem;
     background: #6a6565;
     color: #fff;
-    box-shadow: -20px -20px 0px 0px rgba(100, 100, 100, 0.1);
+}
+
+@media (max-width: 300px) {
+    .container-form {
+        margin-top: 2em;
+    }
 }
 
 .container-form ul {
@@ -24,7 +28,6 @@
     margin-bottom: 0.7rem;
     margin-left: 3px;
     margin-top: 0.2rem;
-
 }
 
 .container-form  h2 {

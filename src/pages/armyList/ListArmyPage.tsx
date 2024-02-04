@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from "react";
-import "../../App.css";
+import React, {useState} from "react";
+import "../../Home.css";
 import './army-list.css';
 import {useDataStore} from "@/store/dataStore";
 import ArmySelectModal from "@/pages/armyList/ArmySelectModal";

@@ -1,9 +1,8 @@
-import { NavLink, useNavigate} from "react-router-dom";
-
+import { NavLink } from "react-router-dom";
+import "./Header.css";
 export default function Header() {
-    const navigate = useNavigate();
     return (
-        <div>
+        <div className={'navigation-header'}>
             <NavLink to="/home" className={({ isActive }) => isActive? "link link-active":"link"}>Accueil</NavLink>
             <NavLink to="/list" className={({ isActive }) => isActive? "link link-active":"link"}>Mes listes</NavLink>
         </div>

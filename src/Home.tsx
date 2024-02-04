@@ -1,6 +1,8 @@
 import React from "react";
-import "./App.css";
+import "./Home.css";
+
 import {useNavigate} from "react-router-dom";
+import {getAssetUrl, getPortraitAssetUrl} from "@/components/Utils";
 
 export default function HomePage() {
 
@@ -11,8 +13,11 @@ export default function HomePage() {
     };
 
     return (
-        <div className="container-form">
-            <button className='index' onClick={handleButtonClick}>MORDHEIM</button>
-        </div>
-    );
+        <>
+            <div className="home-container-form">
+                <img className={"home-logo"} src={getAssetUrl("mordheimLogo.png")}/>
+                <button className='home-button' onClick={handleButtonClick}>ENTRER</button>
+            </div>
+            <img className={"home-footer"} src={getAssetUrl("footer.png")}/>
+        </>);
 }
