@@ -4,20 +4,7 @@ export type ArmyData = {
     name: string,
     icon: string,
     units: UnitData[],
-    equipmentSet1: {
-        "weapons": {
-            handToHandWeapons: number[],
-            missileWeapons: number[],
-        }
-        armours: number[],
-    },
-    equipmentSet2: {
-        "weapons": {
-            handToHandWeapons: number[],
-            missileWeapons: number[],
-        }
-        armours: number[],
-    },
+    skills: Rule[],
 }
 
 export type UnitData = {
@@ -30,10 +17,11 @@ export type UnitData = {
     cost: number,
     minLimit: number,
     maxLimit: number,
-    profil: number[],
-    equipWeapon: boolean,
-    equipArmor: boolean,
-    equipmentSet: string, //'equipmentSet1' | 'equipmentSet2'
+    profils: number[][],
+    skills: number[],
+    armourProficiency: number[],
+    weaponHthProficiency: number[],
+    weaponMissileProficiency: number[],
     rules: Rule[]
 }
 
@@ -54,7 +42,6 @@ export type EquipementsData = {
     },
     armours: EquipementData[],
     miscellaneaous: EquipementData[]
-
 }
 
 export type ArmyRef = {
@@ -62,8 +49,7 @@ export type ArmyRef = {
     name: string,
     icon: string,
     units: UnitRef[],
-    equipmentSet1: Equipements,
-    equipmentSet2: Equipements,
+    skills: [],
 }
 
 export type UnitRef = {
@@ -76,10 +62,10 @@ export type UnitRef = {
     cost: number,
     minLimit: number,
     maxLimit: number,
-    profil: number[],
-    equipWeapon: boolean,
-    equipArmor: boolean,
-    equipmentSet: string,
+    profils: number[][],
+    availableArmors: Equipement[],
+    availableHtHWeapons: Equipement[],
+    availableMissileWeapons: Equipement[],
     rules: Rule[]
 }
 
@@ -102,7 +88,7 @@ export type Equipement = {
 export type Equipements = {
     weapons: Equipement[],
     armours: Equipement[],
-    miscellaneaous: EquipementData[]
+    miscellaneaous: Equipement[]
 }
 
 export type PlayerArmy = {

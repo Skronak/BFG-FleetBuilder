@@ -21,7 +21,7 @@ export default function ListArmyPage() {
     }
 
     return (
-        <div className="builder-form">
+        <div className="container-form">
             <div>WARBAND DISPONIBLES</div>
             <button className={"army-name"} onClick={() => setShowPopup(true)}>+</button>
             {showPopup && (

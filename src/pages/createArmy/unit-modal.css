@@ -4,11 +4,17 @@
     white-space: nowrap;
 }
 
+.unit-carousel{
+    min-height: 8em
+}
+
 .modal-unit-select-container {
+    /*
     width: 50%;
     display: inline-flex;
     flex-flow: column;
     align-items: center;
+    */
 }
 
 .modal-unit-select {

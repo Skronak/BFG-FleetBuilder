@@ -11,7 +11,7 @@ export default function HomePage() {
     };
 
     return (
-        <div className="builder-form">
+        <div className="container-form">
             <button className='index' onClick={handleButtonClick}>MORDHEIM</button>
         </div>
     );

@@ -1,22 +1,16 @@
 import React, {useEffect, useState} from "react";
 import {Equipement, Equipements, PlayerUnit, UnitRef} from "@/army";
-import {getAssetUrl, getPortraitAssetUrl} from "@/components/Utils";
+import {getPortraitAssetUrl} from "@/components/Utils";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import "./unit-modal.css";
-import {Accordion, AccordionDetails, AccordionSummary, Checkbox, Drawer, IconButton, Typography} from "@mui/material";
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
+import {Accordion, AccordionDetails, AccordionSummary, Button, Paper} from "@mui/material";
+import Carousel from "react-material-ui-carousel";
 
 interface Props {
     title: string;
     onClose: () => void;
-    onValidate: (u: UnitRef, w: number[], a: number[]) => void;
+    onAddUnit: (u: UnitRef, w: number[], a: number[]) => void;
+    onEdit: (id: number, u: UnitRef, w: number[], a: number[]) => void;
     playerUnit?: PlayerUnit;
     data: UnitRef[];
     equipmentSet1: Equipements;
@@ -29,146 +23,48 @@ export default function UnitModal(props: Props) {
     const [availableArmors, setAvailableArmors] = useState<Equipement[]>([]);
     const [selectedWeapons, setSelectedWeapons] = useState<number[]>([]);
     const [selectedArmors, setSelectedArmors] = useState<number[]>([]);
-
-    const [checked, setChecked] = React.useState([0]);
-    type Anchor = 'left'|'right';
-    const [state, setState] = React.useState({
-        left: false,
-        right: false,
-    });
+    const profilsLabel = ["Global", "Defensive", "Offensive"];
+    const profilsHeader = [["Adv", "Mar", "Dis", "Rat", "Upk", "Lvl"], ["HP", "Def", "Res", "Arm"], ["Att", "Off", "Str", "AP", "Agi", "Aim"]];
 
     useEffect(() => {
-        if (!!props.playerUnit) {
-            setCurrentUnit(props.data.filter(unit => unit.id === props.playerUnit.id)[0]);
-            if(currentUnit?.equipmentSet=='equipmentSet1') {
-                setAvailableWeapons(props.equipmentSet1.weapons);
-                setAvailableArmors(props.equipmentSet1.armours);
-            } else {
-                setAvailableWeapons(props.equipmentSet2.weapons);
-                setAvailableArmors(props.equipmentSet2.armours);
-            }
-            setSelectedWeapons(props.playerUnit.weapon);
-            setSelectedArmors(props.playerUnit.armor);
-        } else {
-            setCurrentUnit(props.data[0]);//selectionne la premiere unite
-            setSelectedWeapons([]);
-            setSelectedArmors([]);
-        }
+        setCurrentUnit(props.playerUnit ? (props.data.filter(unit => unit.id === props.playerUnit!.id_unit)[0]) : props.data[0]);
+        setSelectedWeapons(props.playerUnit ? props.playerUnit.weapon : []);
+        setSelectedArmors(props.playerUnit ? props.playerUnit.armor : []);
     }, []);
-
-    const handleToggle = (value: number) => () => {
-        const currentIndex = checked.indexOf(value);
-        const newChecked = [...checked];
-
-        if (currentIndex === -1) {
-            newChecked.push(value);
-        } else {
-            newChecked.splice(currentIndex, 1);
-        }
-
-        setChecked(newChecked);
-    };
 
     const handleToggleWeapon = (value: number) => () => {
         if (selectedWeapons.includes(value)) {
             setSelectedWeapons(selectedWeapons.filter(id => id !== value));
-        } else{
+        } else {
             setSelectedWeapons([...selectedWeapons, value]);
         }
     }
 
-    const toggleDrawer =
-        (anchor: Anchor, open: boolean) =>
-            (event: React.KeyboardEvent | React.MouseEvent) => {
-                if (
-                    event.type === 'keydown' &&
-                    ((event as React.KeyboardEvent).key === 'Tab' ||
-                        (event as React.KeyboardEvent).key === 'Shift')
-                ) {
-                    return;
-                }
-
-                setState({ ...state, [anchor]: open });
-    };
-
-    const list = (anchor: Anchor) => (
-        <Box
-            sx={{ width: '70%' }}
-            role="presentation"
-            onKeyDown={toggleDrawer(anchor, false)}
-        >
-            <Divider />
-            <List sx={{ width: '100%', maxWidth: 420, bgcolor: 'background.paper' }}>
-                {props.equipmentSet1.weapons.map((elt, index) => {
-                    const labelId = `checkbox-list-label-${elt.id}`;
-
-                    return (
-                        <ListItem
-                            alignItems="flex-start"
-                            disablePadding
-                        >
-                            <ListItemButton role={undefined} onClick={handleToggle(elt.id)} dense>
-                                <ListItemIcon>
-                                    <Checkbox
-                                        edge="start"
-                                        checked={checked.indexOf(elt.id) !== -1}
-                                        tabIndex={-1}
-                                        disableRipple
-                                        inputProps={{'aria-labelledby': labelId}}
-                                        sx={{ }}
-                                    />
-                                </ListItemIcon>
-                                <ListItemText id={labelId}
-                                              primary={`${elt.name} - ${elt.cost}gc`}
-                                              secondary={
-                                                  <React.Fragment>
-                                                      <Typography
-                                                          sx={{ display: 'inline' }}
-                                                          component="span"
-                                                          variant="body2"
-                                                          color="text.primary"
-                                                      >
-                                                          {elt.rule}
-                                                      </Typography>
-                                                      <Divider variant="inset" component="li" />
-                                                      {elt.specialRules.map(rule=> {
-                                                          return (
-                                                              <span>
-                                                              <Typography
-                                                                  sx={{ display: 'inline' }}
-                                                                  component="span"
-                                                                  variant="body2"
-                                                                  color="text.primary"
-                                                              >
-                                                                  {rule.name}:
-                                                              </Typography>
-                                                              {rule.effect}
-</span>
-                                                      )
-                                                          })}
-                                                  </React.Fragment>
-                                              }/>
-                            </ListItemButton>
-                        </ListItem>);
-                })}
-        </List>
-        </Box>
-    );
+    const onChangeCarousel = (index: number) => {
+        setCurrentUnit(props.data[index]);
+    }
+    const getDefaultIndexCarousel = () => {
+        return props.playerUnit ? props.data.map(elt => elt.id).indexOf(props.playerUnit.id_unit) : 0;
+    }
 
     return (
         <div title={props.title}>
             <div className={"modal-units-select-container"}>
-                {props.data.sort((e1, e2) => e1.cost - e2.cost)
-                    .map(elt =>
-                            <div className="modal-unit-select-container" key={elt.id}>
-              <span className="modal-unit-select" onClick={() => setCurrentUnit(elt)}>
-                <span>{elt.name} - {elt.cost}gc</span>
-                <img className={"modal-unit-icon"} src={getPortraitAssetUrl(elt.icon)}/>
-                <input type="checkbox" checked={currentUnit && currentUnit.id === elt.id}></input>
-              </span>
-                            </div>
-                    )}
+                <Carousel onChange={onChangeCarousel} className={"unit-carousel"} autoPlay={false} animation={"slide"}
+                          navButtonsAlwaysVisible={true} cycleNavigation={false} index={getDefaultIndexCarousel()}>
+                    {props.data.sort((e1, e2) => e1.cost - e2.cost)
+                        .map(elt => (
+                                <div className="modal-unit-select-container" key={elt.id}>
+                                <span className="modal-unit-select" onClick={() => setCurrentUnit(elt)}>
+                                <span>{elt.name} - {elt.cost}gc</span>
+                                <img className={"modal-unit-icon"} src={getPortraitAssetUrl(elt.icon)}/>
+                                </span>
+                                </div>
+                            )
+                        )}
+                </Carousel>
             </div>
+
             <div>
                 <Accordion defaultExpanded>
                     <AccordionSummary
@@ -176,49 +72,19 @@ export default function UnitModal(props: Props) {
                         aria-controls="panel3-content"
                         id="panel3-header"
                     >
-                        Background
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <div className={"modal-unit-description modal-unit-container"}>
-                            {currentUnit && currentUnit.description}
-                        </div>
-                    </AccordionDetails>
-                </Accordion>
-                <Accordion defaultExpanded>
-                    <AccordionSummary
-                        expandIcon={<ExpandMoreIcon/>}
-                        aria-controls="panel3-content"
-                        id="panel3-header"
-                    >
-                        Unit Profil
+                        Unit Profil {currentUnit?.name}
                     </AccordionSummary>
                     <AccordionDetails>
                         <div className={"modal-unit-container"}>
-                            {currentUnit && currentUnit.profil.length !== 0 && (
-                                <table className={"modal-unit-profil-table"}>
-                                    <tr>
-                                        <th>M</th>
-                                        <th>WS</th>
-                                        <th>BS</th>
-                                        <th>S</th>
-                                        <th>T</th>
-                                        <th>W</th>
-                                        <th>I</th>
-                                        <th>A</th>
-                                        <th>Ld</th>
-                                    </tr>
-                                    <tr>
-                                        <td>{currentUnit.profil[0]}</td>
-                                        <td>{currentUnit.profil[1]}</td>
-                                        <td>{currentUnit.profil[2]}</td>
-                                        <td>{currentUnit.profil[3]}</td>
-                                        <td>{currentUnit.profil[4]}</td>
-                                        <td>{currentUnit.profil[5]}</td>
-                                        <td>{currentUnit.profil[6]}</td>
-                                        <td>{currentUnit.profil[7]}</td>
-                                        <td>{currentUnit.profil[8]}</td>
-                                    </tr>
-                                </table>)}
+                            {currentUnit && currentUnit.profils && currentUnit.profils.map((profil, i) => (
+                                <>
+                                    <p>{profilsLabel[i]}</p>
+                                    <table className={"modal-unit-profil-table"}>
+                                        <tr>{profilsHeader[i].map((header) => <th>{header}</th>)}</tr>
+                                        <tr>{profil.map(elt => <td>{elt}</td>)}</tr>
+                                    </table>
+                                </>
+                            ))}
                         </div>
                         <span>Rules</span>
                         <div className={"modal-unit-container modal-unit-rules"}>
@@ -228,74 +94,27 @@ export default function UnitModal(props: Props) {
                         </div>
                     </AccordionDetails>
                 </Accordion>
+            </div>
 
-                <div className={"modal-unit-container"}>
-
-                    {currentUnit && currentUnit.equipWeapon && (
-                        <Accordion>
-                            <AccordionSummary
-                                expandIcon={<ExpandMoreIcon/>}
-                                aria-controls="panel1-content"
-                                id="panel1-header"
-                            >
-                                Additionnal Equipement
-                            </AccordionSummary>
-                            <AccordionDetails>
-                                {(['left'] as const).map((anchor) => (
-                                    <React.Fragment key={anchor}>
-                                        <Button onClick={toggleDrawer(anchor, true)}>Edit weapons</Button>
-                                        <Drawer
-                                            anchor={anchor}
-                                            open={state[anchor]}
-                                            onClose={toggleDrawer(anchor, false)}
-                                        >
-                                            {list(anchor)}
-                                        </Drawer>
-                                    </React.Fragment>
-                                ))}
-                                <div className={"modal-units-select-container"}>
-                                    {(currentUnit.equipmentSet === 'equipmentSet1' ? (
-                                        <div className={'weapon-bloc'}>
-                                            {props.equipmentSet1.weapons.map(elt =>
-                                                    <div className="modal-weapon-select-container" key={elt.id}>
+            <div className={"modal-unit-container"}>
+                <div className={"modal-units-select-container"}>
+                    <div className={'weapon-bloc'}>
+                        {currentUnit && currentUnit.availableHtHWeapons.map(elt =>
+                            <div className="modal-weapon-select-container" key={elt.id}>
                                                       <span className="modal-weapon-select">
                                                         <span>{elt.name} - {elt.cost}pts</span>
-                                                        <input onClick={handleToggleWeapon(elt.id)} checked={selectedWeapons && selectedWeapons.includes(elt.id)} type="checkbox"></input>
+                                                        <input onClick={handleToggleWeapon(elt.id)}
+                                                               checked={selectedWeapons && selectedWeapons.includes(elt.id)}
+                                                               type="checkbox"></input>
                                                       </span>
-                                                    </div>
-                                            )}
-                                           </div>
-                                    ) : (
-                                        props.equipmentSet2.weapons.map(elt =>
-                                            <div className="modal-weapon-select-container" key={elt.id}>
-                                              <span className="modal-weapon-select">
-                                                <span>{elt.name} - {elt.cost}pts</span>
-                                                <input type="checkbox" checked={currentUnit && currentUnit.id === elt.id}></input>
-                                              </span>
-                                            </div>
-                                        )
-                                    ))}
-                                </div>
-                            </AccordionDetails>
-                        </Accordion>
-                    )}
+                            </div>
+                        )}
+                    </div>
                 </div>
-                {(['right'] as const).map((anchor) => (
-                    <React.Fragment key={anchor}>
-                        <Button onClick={toggleDrawer(anchor, true)}>Add armor</Button>
-                        <Drawer
-                            anchor={anchor}
-                            open={state[anchor]}
-                            onClose={toggleDrawer(anchor, false)}
-                        >
-                            {list(anchor)}
-                        </Drawer>
-                    </React.Fragment>
-                ))}
-                <label>Total Cost : {currentUnit? currentUnit.cost : 0}</label>
+                <label>Total Cost : {currentUnit ? currentUnit.cost : 0}</label>
             </div>
             <button onClick={props.onClose}>Annuler</button>
-            <button onClick={() => props.onValidate(currentUnit!, selectedWeapons, selectedArmors)}>Enregistrer</button>
+            <button onClick={() => props.playerUnit ? props.onEdit(props.playerUnit.id, currentUnit!, selectedWeapons, selectedArmors) : props.onAddUnit(currentUnit!, selectedWeapons, selectedArmors)}>Enregistrer</button>
         </div>
     )
 }

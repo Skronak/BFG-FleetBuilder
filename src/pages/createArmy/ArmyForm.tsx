@@ -66,14 +66,7 @@ function ArmyForm(props: Props) {
       name: 'DATA NOT FOUND',
       icon: 'string',
       units: [],
-      equipmentSet1: {
-        weapons: [],
-        armours: []
-      },
-      equipmentSet2: {
-        weapons: [],
-        armours: []
-      }
+      skills:[]
     };
   }
 
@@ -126,8 +119,31 @@ function ArmyForm(props: Props) {
     boxShadow: 24,
     p: 4,
   };
+
+  const editUnit = (idUnitRef: number, val: UnitRef, weapons: number[], armor: number[]) => {
+    const updatedUnits = playerArmy.units.map(unit => {
+      if (unit.id === idUnitRef) {
+        return {...unit, id_unit: val.id, weapon: weapons, armor: armor};
+      }
+      return unit;
+    });
+    setPlayerArmy({
+      ...playerArmy,
+      units: updatedUnits,
+    })
+    setOpen(false);
+  }
+
+  const addUnit = (val: UnitRef, weapons: number[], armor: number[]) => {
+    setPlayerArmy({
+      ...playerArmy,
+      units: [unitToPlayerUnit(val, weapons, armor), ...playerArmy.units],
+    });
+    setOpen(false);
+  }
+
   return (
-    <div className="builder-form">
+    <div className="container-form">
       <InputAddComponent value={playerArmy.name} handleChange={(evt) => setPlayerArmy({...playerArmy, name: evt.target.value})} placeholder={'Warband Name'}/>
       <div className={"title-cost"}>cost: {Object.keys(playerArmy.units).flatMap(k=>playerArmy.units[k]).map(l=>l.cost).reduce((kv,v)=>kv+v,0)} points</div>
 
@@ -145,17 +161,9 @@ function ArmyForm(props: Props) {
                 title='Ajouter une unite'
                 onClose={() => (handleClose)}
                 data={modalUnitRefs}
-                equipmentSet1={armyRef.equipmentSet1}
-                equipmentSet2={armyRef.equipmentSet2}
                 playerUnit={selectedPlayerUnit ? selectedPlayerUnit : undefined}
-/*                onEdit={}*/
-                onValidate={(val: UnitRef, weapons: number[], armor: number[]) => {
-                  setPlayerArmy({
-                    ...playerArmy,
-                    units: [unitToPlayerUnit(val, weapons, armor), ...playerArmy.units],
-                  });
-                  setOpen(false);
-                }}
+                onEdit={editUnit}
+                onAddUnit={addUnit}
             />
           </Box>
         </Modal>
@@ -169,7 +177,7 @@ function ArmyForm(props: Props) {
           </h2>
           {playerArmy.units && playerArmy.units.filter(unit=>unit.type==type).map((unit: PlayerUnit) => (
             <Row
-              edit={edit}à
+              edit={edit}
               remove={remove}
               key={unit.id}
               playerUnit={unit}
