@@ -169,7 +169,7 @@ function ArmyForm(props: Props) {
           </h2>
           {playerArmy.units && playerArmy.units.filter(unit=>unit.type==type).map((unit: PlayerUnit) => (
             <Row
-              edit={edit}
+              edit={edit}à
               remove={remove}
               key={unit.id}
               playerUnit={unit}

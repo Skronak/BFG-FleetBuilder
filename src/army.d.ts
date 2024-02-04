@@ -9,14 +9,14 @@ export type ArmyData = {
             handToHandWeapons: number[],
             missileWeapons: number[],
         }
-        armours: number[]
+        armours: number[],
     },
     equipmentSet2: {
         "weapons": {
             handToHandWeapons: number[],
             missileWeapons: number[],
         }
-        armours: number[]
+        armours: number[],
     },
 }
 
@@ -40,8 +40,9 @@ export type UnitData = {
 export type EquipementData = {
     id: number,
     name: string,
-    cost: number,
+    cost: number[], // match index with id army-1
     brace: boolean,
+    hand: number,
     rule: string,
     specialRules: Rule[]
 }
@@ -51,7 +52,9 @@ export type EquipementsData = {
         handToHand: EquipementData[],
         missileWeapons: EquipementData[],
     },
-    armours: EquipementData[]
+    armours: EquipementData[],
+    miscellaneaous: EquipementData[]
+
 }
 
 export type ArmyRef = {
@@ -90,14 +93,16 @@ export type Equipement = {
     id: number,
     name: string,
     cost: number,
+    hand: number,
     brace: boolean,
     rule: string,
     specialRules: Rule[]
 }
 
 export type Equipements = {
-    weapons: Equipement[]
-    armours: Equipement[]
+    weapons: Equipement[],
+    armours: Equipement[],
+    miscellaneaous: EquipementData[]
 }
 
 export type PlayerArmy = {

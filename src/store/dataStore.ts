@@ -14,12 +14,14 @@ const transformArmyDataToArmy = (data: ArmyData[], items: EquipementsData): Army
             items.weapons.handToHand.filter(eq => army.equipmentSet1.weapons.handToHandWeapons.includes(eq.id)).map(weapon => {
                 return {
                     ...weapon,
+                    cost: weapon.cost[army.id-1],
                     type: 'handToHand'
                 }
             }).concat(
             items.weapons.missileWeapons.filter(eq => army.equipmentSet1.weapons.missileWeapons.includes(eq.id)).map(weapon => {
                 return {
                     ...weapon,
+                    cost: weapon.cost[army.id-1],
                     type: 'missileWeapons'
                 }
             }))
@@ -28,12 +30,14 @@ const transformArmyDataToArmy = (data: ArmyData[], items: EquipementsData): Army
             items.weapons.handToHand.filter(eq => army.equipmentSet2.weapons.handToHandWeapons.includes(eq.id)).map(weapon => {
                 return {
                     ...weapon,
+                    cost: weapon.cost[army.id-1],
                     type: 'handToHand'
                 }
             }).concat(
             items.weapons.missileWeapons.filter(eq => army.equipmentSet2.weapons.missileWeapons.includes(eq.id)).map(weapon => {
                 return {
                     ...weapon,
+                    cost: weapon.cost[army.id-1],
                     type: 'missileWeapons'
                 }
             }));
