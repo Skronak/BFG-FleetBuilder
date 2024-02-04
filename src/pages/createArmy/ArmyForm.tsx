@@ -46,7 +46,7 @@ function ArmyForm(props: Props) {
       setPlayerArmy({
         ...playerArmy,
         id: playerArmies.length > 0 ? Math.max(...playerArmies.map(army=> +army.id))+1 : 1,
-        race: raceId,
+        race: raceId!,
       });
     }
 
