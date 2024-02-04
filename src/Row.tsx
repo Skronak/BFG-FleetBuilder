@@ -4,8 +4,8 @@ import "./Row.css";
 import {PlayerUnit, UnitRef} from "@/army";
 
 interface Props {
-    remove,
-    edit,
+    remove: any,
+    edit: (arg0: PlayerUnit) => void,
     unit: UnitRef,
     playerUnit: PlayerUnit
 }

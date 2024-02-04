@@ -4,6 +4,7 @@ import path from 'path'
 import {fileURLToPath} from "url";
 
 export default defineConfig({
+    base: "/BFG-FleetBuilder",
     plugins: [react()],
     resolve: {
         alias: {

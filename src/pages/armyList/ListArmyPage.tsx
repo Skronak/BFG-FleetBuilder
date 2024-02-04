@@ -8,11 +8,12 @@ import {useNavigate} from "react-router-dom";
 import {useLocalStorageDataStore} from "@/store/localStorageDataStore";
 
 export default function ListArmyPage() {
-    const [showPopup, setShowPopup] = useState(false);
-    //const [playerArmies, setPlayerArmies] = useState<PlayerArmy[]>();
     const navigate = useNavigate();
-    const {appData} = useDataStore();
+
     const {playerArmies, setPlayerArmies} = useLocalStorageDataStore();
+    const {appData} = useDataStore();
+
+    const [showPopup, setShowPopup] = useState(false);
 
     function deleteUserArmy(id: number) {
         let newPlayerArmies = playerArmies?.filter(army => army.id !== id);
@@ -35,8 +36,8 @@ export default function ListArmyPage() {
                             <span className={'army-name'}>{army.name}</span>
                             <span> {army.cost}gc</span>
                         </button>
-                        <button className={'icon-button'} onClick={()=>navigate('/edit/'+army.id)}><img src={'/src/assets/icons/ico_editer.svg'}/></button>
-                        <button className={'icon-button'} onClick={()=>deleteUserArmy(+army.id)}><img src={'/src/assets/icons/ico_close.svg'}/></button>
+                        <button className={'icon-button'} onClick={() => navigate('/edit/' + army.id)}><img src={'/src/assets/icons/ico_editer.svg'}/></button>
+                        <button className={'icon-button'} onClick={() => deleteUserArmy(+army.id)}><img src={'/src/assets/icons/ico_close.svg'}/></button>
                         </span>
                 ))}
             </div>
