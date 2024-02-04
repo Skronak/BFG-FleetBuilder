@@ -1,23 +1,23 @@
 import {Navigate, Route, Routes, useNavigate} from "react-router-dom";
-import Home from "./Home";
 import React from "react";
-import {CreateArmyPage} from "@/pages/createArmy/CreateArmyPage";
+import {ArmyPage} from "@/pages/createArmy/ArmyPage";
 import Header from "./pages/Header";
 import ListArmyPage from "@/pages/armyList/ListArmyPage";
+import HomePage from "./Home";
 
 const App: React.FC = () => {
     const navigate = useNavigate();
     return (
-        <div className='App'>
-            <Header></Header>
+        <div>
+            <Header/>
                 <Routes>
-                    <Route path="/" element={<Home/>} />
-                    <Route path="/home" element={<Home/>} />
+                    <Route path="/" element={<HomePage/>} />
+                    <Route path="/home" element={<HomePage/>} />
                     <Route path="/list" element={<ListArmyPage/>} />
-                    <Route path="/create/:idArmy" element={<CreateArmyPage/>} />
+                    <Route path="/create/:idRace" element={<ArmyPage/>} />
+                    <Route path="/edit/:idArmy" element={<ArmyPage/>} />
                     <Route path="*" element={<Navigate to="/"/>} />
                 </Routes>
-            <button onClick={()=>navigate(-1)}>Précedent</button>
         </div>
     );
 };export default App;

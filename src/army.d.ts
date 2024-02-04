@@ -3,48 +3,36 @@ export type ArmyData = {
     id: number,
     name: string,
     icon: string,
-    equipmentSet1: {
-        "weapons": {
-            handToHandWeapons: number[],
-            missileWeapons: number[],
-        }
-        armours: number[]
-    },
-    equipmentSet2: {
-        "weapons": {
-            handToHandWeapons: number[],
-            missileWeapons: number[],
-        }
-        armours: number[]
-    },
-    units: {
-        heroes: UnitData[],
-        henchmen: UnitData[]
-    };
+    units: UnitData[],
+    skills: Rule[],
 }
 
 export type UnitData = {
     id: number,
     name: string,
+    type: string
     icon: string,
     description: string,
     startingExp: number,
     cost: number,
     minLimit: number,
     maxLimit: number,
-    profil: number[],
-    equipWeapon: boolean,
-    equipArmor: boolean,
-    equipmentSet: 'equipmentSet1' | 'equipmentSet2',
+    profils: number[][],
+    skills: number[],
+    armourProficiency: number[],
+    weaponHthProficiency: number[],
+    weaponMissileProficiency: number[],
     rules: Rule[]
 }
 
 export type EquipementData = {
     id: number,
     name: string,
-    cost: number,
+    cost: number[], // match index with id army-1
     brace: boolean,
-    rule: string[]
+    hand: number,
+    rule: string,
+    specialRules: Rule[]
 }
 
 export type EquipementsData = {
@@ -52,19 +40,33 @@ export type EquipementsData = {
         handToHand: EquipementData[],
         missileWeapons: EquipementData[],
     },
-    armours: EquipementData[]
+    armours: EquipementData[],
+    miscellaneaous: EquipementData[]
 }
 
-export type Army = {
+export type ArmyRef = {
     id: number,
     name: string,
     icon: string,
-    units: {
-        heroes: Unit[],
-        henchmen: Unit[]
-    };
-    equipmentSet1: Equipements,
-    equipmentSet2: Equipements,
+    units: UnitRef[],
+    skills: [],
+}
+
+export type UnitRef = {
+    id: number,
+    name: string,
+    type: string,
+    icon: string,
+    description: string,
+    startingExp: number,
+    cost: number,
+    minLimit: number,
+    maxLimit: number,
+    profils: number[][],
+    availableArmors: Equipement[],
+    availableHtHWeapons: Equipement[],
+    availableMissileWeapons: Equipement[],
+    rules: Rule[]
 }
 
 export type Rule = {
@@ -72,91 +74,35 @@ export type Rule = {
     effect?: string
 };
 
-export type Unit = {
-    id: number,
-    name: string,
-    icon: string,
-    description: string,
-    startingExp: number,
-    cost: number,
-    minLimit: number,
-    maxLimit: number,
-    profil: number[],
-    equipWeapon: boolean,
-    equipArmor: boolean,
-    equipmentSet: 'equipmentSet1' | 'equipmentSet2',
-    rules: Rule[]
-}
 
 export type Equipement = {
     id: number,
     name: string,
     cost: number,
+    hand: number,
     brace: boolean,
-    rule: string
+    rule: string,
+    specialRules: Rule[]
 }
 
 export type Equipements = {
-    weapons: {
-        handToHand: Equipement[],
-        missileWeapons: Equipement[],
-    },
-    armours: Equipement[]
-}
-
-export type UnitRow = {
-    id: number,
-    name: string,
-    icon: string,
-    exp: number,
-    cost: number,
-    maxLimit: number,
-    profil: number[],
-    equipWeapon: boolean,
-    equipArmor: boolean,
-    armor: [],
-    weapon: []
-    rules: Rule[]
+    weapons: Equipement[],
+    armours: Equipement[],
+    miscellaneaous: Equipement[]
 }
 
 export type PlayerArmy = {
     id: number;
     race: number;
     name: string;
-    units: {
-        heroes: PlayerUnit[];
-        henchmen: PlayerUnit[];
-    }
+    cost: number;
+    units: PlayerUnit[];
 }
 
 export type PlayerUnit = {
     id: number;
+    id_unit: number;
+    type: string;
     weapon: number[];
     armor: number[];
-}
-
-export type ItemOption = {
-    id: string;
-    value: string;
-}
-
-export type PlayerArmyLS = {
-    id: number;
-    race: number;
-    name: string;
-    units: {
-        heroes: PlayerUnitLS[];
-        henchmen: PlayerUnitLS[];
-    }
-}
-
-export type PlayerUnitLS = {
-    id: number;
-    weapon: number[];
-    armor: number[];
-}
-
-export type TypedUnit = {
-    type: string,
-    units: Unit[];
 }

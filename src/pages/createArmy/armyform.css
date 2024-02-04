@@ -1,34 +1,36 @@
-.builder-form {
-    margin: 4rem auto;
-    padding: 2rem 3rem 3rem;
-    max-width: 500px;
+.container-form {
+    padding: 2rem 2% 3rem;
     background: #6a6565;
     color: #fff;
-    box-shadow: -20px -20px 0px 0px rgba(100, 100, 100, 0.1);
 }
 
-.builder-form ul {
+@media (max-width: 300px) {
+    .container-form {
+        margin-top: 2em;
+    }
+}
+
+.container-form ul {
     margin-top: 2.6rem;
     list-style: none;
 }
 
-.builder-form h1 {
+.container-form h1 {
     font-weight: normal;
     font-size: 2.6rem;
     letter-spacing: 0.05em;
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-.builder-form h1 .input-field {
+.container-form h1 .input-field {
     display: block;
     font-size: 0.8rem;
     margin-bottom: 0.7rem;
     margin-left: 3px;
     margin-top: 0.2rem;
-
 }
 
-.builder-form  h2 {
+.container-form  h2 {
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);

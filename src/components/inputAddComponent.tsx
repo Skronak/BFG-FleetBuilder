@@ -1,4 +1,4 @@
-import React, {useReducer, useState} from "react";
+import React, {useEffect, useReducer, useState} from "react";
 import "./inputAddComponent.css";
 
 interface Props {
@@ -7,20 +7,19 @@ interface Props {
     withButton?: boolean;
     buttonLabel?: string;
     handleClickButton?: () => void;
+    value: string;
 }
 
 export default function InputAddComponent(props: Props) {
-  const [userInput, setUserInput] = useState("");
 
   const onChange = (val: React.ChangeEvent<HTMLInputElement>) => {
-    setUserInput(val.target.value);
     props.handleChange(val);
   }
 
   return (
     <form className="NewTodoForm">
       <input
-        value={userInput}
+        value={props.value}
         onChange={onChange}
         id="task"
         type="text"
