@@ -1,0 +1,20 @@
+toast message to notify saucces || error
+
+armoury: [{
+    id:
+    cost:
+}]
+
+https://www.youtube.com/watch?v=2hR-uWjBAgw&t=3947s
+
+DB access actions:
+ARMY LIST
+READ userWarband: access army list page
+ADD userWarband: duplicate army
+DELETE userWarband: delete army
+ADD/UPDATE: Save army
+
+USER UNIT
+ADD userUnit: save army
+UPDATE userUnit: save army
+DELETE userUnit: save army

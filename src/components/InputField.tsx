@@ -1,14 +1,17 @@
-import {useState} from "react";
+import React, {useState} from "react";
+import { ActionIcon } from '@mantine/core';
+import {IconEdit} from '@tabler/icons-react';
 import "./InputField.css";
 
 interface Props {
-    subClass: string
+    subClass?: string;
     defaultValue?: string;
+    readonly?: boolean;
+    handleChange?: (evt: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export default function InputField({subClass, defaultValue}: Props) {
+export default function InputField({subClass, defaultValue, readonly, handleChange}: Props) {
     const [isEditing, setIsEditing] = useState(false);
-    const [value, setValue] = useState(defaultValue? defaultValue : '');
 
     const toggleFrom = () => {
         setIsEditing(!isEditing);
@@ -17,22 +20,21 @@ export default function InputField({subClass, defaultValue}: Props) {
         evt.preventDefault();
         toggleFrom();
     };
-    const handleChange = (evt: { target: { value: React.SetStateAction<string>; }; }) => {
-        setValue(evt.target.value);
-    };
     return isEditing ? (
             <div className={subClass}>
-                <form className="Todo-edit-form" onSubmit={handleUpdate}>
-                    <input onChange={handleChange} value={value} type="text"/>
+                <form className="input-edit" onSubmit={handleUpdate}>
+                    <input onChange={handleChange} value={defaultValue} type="text"/>
                     <button>Save</button>
                 </form>
             </div>
         ) : (
             <div id='parent' className={subClass}>
-                {value}
-                <button className='hidden-child' onClick={toggleFrom}>
-                    <i className="fas fa-pen"/>
-                </button>
+                {defaultValue}
+                {!readonly && (
+                  <ActionIcon variant="filled" color="red" aria-label="edit_title" onClick={toggleFrom}>
+                      <IconEdit style={{ width: '70%', height: '70%' }} />
+                  </ActionIcon>
+                )}
             </div>
         );
 }

@@ -1,8 +1,11 @@
 //DATA as represented by the JSON file
-export type ArmyData = {
+export type WarbandData = {
     id: number,
     name: string,
+    race: string,
     icon: string,
+    background: string,
+    color: string,
     units: UnitData[],
     skills: Rule[],
 }
@@ -22,6 +25,7 @@ export type UnitData = {
     armourProficiency: number[],
     weaponHthProficiency: number[],
     weaponMissileProficiency: number[],
+    miscellaneaousProficiency: number[],
     rules: Rule[]
 }
 
@@ -29,6 +33,7 @@ export type EquipementData = {
     id: number,
     name: string,
     cost: number[], // match index with id army-1
+    type: string,
     brace: boolean,
     hand: number,
     rule: string,
@@ -36,20 +41,21 @@ export type EquipementData = {
 }
 
 export type EquipementsData = {
-    weapons: {
-        handToHand: EquipementData[],
-        missileWeapons: EquipementData[],
-    },
+    weapons: EquipementData[],
     armours: EquipementData[],
     miscellaneaous: EquipementData[]
 }
 
-export type ArmyRef = {
+export type WarbandRef = {
     id: number,
     name: string,
+    race: string;
     icon: string,
+    color: string,
+    background: string;
     units: UnitRef[],
     skills: [],
+    equipements: Equipement[]
 }
 
 export type UnitRef = {
@@ -63,9 +69,9 @@ export type UnitRef = {
     minLimit: number,
     maxLimit: number,
     profils: number[][],
-    availableArmors: Equipement[],
-    availableHtHWeapons: Equipement[],
-    availableMissileWeapons: Equipement[],
+    weaponProfiency: number[],
+    armoursProficiency: number[],
+    miscellaneaousProficiency: number[],
     rules: Rule[]
 }
 
@@ -78,7 +84,8 @@ export type Rule = {
 export type Equipement = {
     id: number,
     name: string,
-    cost: number,
+    type: string,
+    cost: number[],
     hand: number,
     brace: boolean,
     rule: string,
@@ -91,11 +98,13 @@ export type Equipements = {
     miscellaneaous: Equipement[]
 }
 
-export type PlayerArmy = {
-    id: number;
-    race: number;
+export type UserWarband = {
+    id: string;
+    race: string;
+    raceId: number;
     name: string;
     cost: number;
+    lastUpdate: string;
     units: PlayerUnit[];
 }
 
@@ -105,4 +114,6 @@ export type PlayerUnit = {
     type: string;
     weapon: number[];
     armor: number[];
+    miscellaneaous: number[];
+    //proficiency
 }

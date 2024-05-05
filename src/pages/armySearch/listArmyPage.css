@@ -1,0 +1,82 @@
+@media screen and (max-width: 500px) {
+    .hide-on-mobile {
+        display: none;
+    }
+}
+
+.user-army-row-btn {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-right: 0.5em;
+    border-radius: 0 .7em .7em 0;
+    color: black;
+    min-width: 80%;
+}
+
+.list-army-page .army-field {
+    padding-right: 1em;
+}
+
+.list-army-page .user-army-row {
+    display: flex;
+    height: 3em;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-bottom: .2em;
+}
+
+.list-army-page .user-army-row-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.list-army-page .icon-button {
+    width: 10%;
+    max-width: 5em
+}
+
+.list-army-page .icon-button img {
+    width: 2em;
+    height: 2em
+}
+
+.list-army-page .icon-go {
+    width: 3em;
+    height: 2em;
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.list-army-page .btn-clone {
+    margin-right: .5em;
+    border-radius: .5em;
+    background-color: #ffbe67;
+    cursor: pointer;
+    font-size: initial;
+}
+
+.list-army-page .btn-delete {
+    border-radius: .5em;
+    background-color: #bd3c09;
+    cursor: pointer;
+    font-size: initial;
+    margin: 0 auto;
+}
+
+.list-army-page .btn-plus {
+    width: 2em;
+    height: 2em;
+    margin-right: .5em;
+    border-radius: .5em;
+    background-color: #1e7ca5;
+    cursor: pointer
+}
+
+.list-army-page .list-army-top-menu {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 5% 1em
+}

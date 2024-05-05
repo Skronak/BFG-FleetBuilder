@@ -1,23 +1,32 @@
 import {Navigate, Route, Routes, useNavigate} from "react-router-dom";
 import React from "react";
-import {ArmyPage} from "@/pages/createArmy/ArmyPage";
-import Header from "./pages/Header";
-import ListArmyPage from "@/pages/armyList/ListArmyPage";
-import HomePage from "./Home";
+import {ArmyParentPage} from "@/pages/armyEdit/ArmyParentPage";
+import ListArmyPage from "@/pages/armySearch/ListArmyPage";
+import "./App.css";
+import HomePage from "./pages/home/HomePage";
+import { MantineProvider } from "@mantine/core";
+import '@mantine/core/styles.css';
+import '@mantine/carousel/styles.css';
+import AtlasPage from "@/pages/Atlas/AtlasPage";
 
 const App: React.FC = () => {
-    const navigate = useNavigate();
     return (
-        <div>
-            <Header/>
-                <Routes>
-                    <Route path="/" element={<HomePage/>} />
-                    <Route path="/home" element={<HomePage/>} />
-                    <Route path="/list" element={<ListArmyPage/>} />
-                    <Route path="/create/:idRace" element={<ArmyPage/>} />
-                    <Route path="/edit/:idArmy" element={<ArmyPage/>} />
-                    <Route path="*" element={<Navigate to="/"/>} />
-                </Routes>
-        </div>
+        <>
+            <React.Suspense fallback="Loading...">
+                <MantineProvider forceColorScheme={'dark'}>
+                    <Routes>
+                        <Route path="/mordheimHelper/" element={<HomePage/>} />
+                        <Route path="/mordheimHelper/home" element={<HomePage/>} />
+                        <Route path="/mordheimHelper/list" element={<ListArmyPage/>} />
+                        <Route path="/mordheimHelper/create/:idRace" element={<ArmyParentPage/>} />
+                        <Route path="/mordheimHelper/edit/:idArmy" element={<ArmyParentPage/>} />
+                        <Route path="/mordheimHelper/atlas" element={<AtlasPage/>} />
+                        <Route path="*" element={<Navigate to="/"/>} />
+                    </Routes>
+                </MantineProvider>
+            </React.Suspense>
+        </>
     );
-};export default App;
+};
+
+export default App;

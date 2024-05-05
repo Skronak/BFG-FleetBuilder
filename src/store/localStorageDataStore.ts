@@ -1,9 +1,10 @@
 import {create} from 'zustand'
-import {ArmyRef, PlayerArmy} from "@/army";
+import {WarbandRef, UserWarband} from "@/army";
 
+// Replace a DB with the user localstorage
 type DataStoreType = {
-    playerArmies: PlayerArmy[];
-    setPlayerArmies: (data: PlayerArmy[]) => void;
+    playerArmies: UserWarband[];
+    setPlayerArmies: (data: UserWarband[]) => void;
 }
 
 const initStore = () => {
@@ -11,21 +12,12 @@ const initStore = () => {
     if (!data || data.length == 0) {
         localStorage.setItem('playerArmies', JSON.stringify([{
             id: 2,
-            race: 1,
+            raceId: 1,
             name: 'Knight of Azueri',
             cost: 750,
-            units: [{
-                heroes: [{
-                    id: 1,
-                    weapon: [],
-                    armor: [],
-                }],
-                henchmen: [{
-                    id: 1,
-                    weapon: [],
-                    armor: [],
-                }]}
-            ]
+            race: 'humain',
+            lastUpdate: '01/01/2024',
+            units: [],
         }]));
         data = localStorage.getItem('playerArmies');
     }
@@ -34,5 +26,5 @@ const initStore = () => {
 
 export const useLocalStorageDataStore = create<DataStoreType>((set) => ({
     playerArmies: initStore(),
-    setPlayerArmies: (newData: PlayerArmy[]) => set({playerArmies: newData}),
+    setPlayerArmies: (newData: UserWarband[]) => set({playerArmies: newData}),
 }));
