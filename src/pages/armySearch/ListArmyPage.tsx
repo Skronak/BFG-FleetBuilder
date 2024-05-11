@@ -19,10 +19,10 @@ export default function ListArmyPage() {
     }, []);
 
     const loadUserDataFromDB = async () => {
-        const { data, error } = await supabase
-            .from('Spaceship')
-            .select('*')
-        console.log(data);
+        // const { data, error } = await supabase
+        //     .from('Spaceship')
+        //     .select('*')
+        // console.log(data);
 
         let sessionData = sessionStorage.getItem("userData");
         /*

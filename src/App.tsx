@@ -1,4 +1,4 @@
-import {Navigate, Route, Routes, useNavigate} from "react-router-dom";
+import {Navigate, Route, Routes} from "react-router-dom";
 import React from "react";
 import {ArmyParentPage} from "@/pages/armyEdit/ArmyParentPage";
 import ListArmyPage from "@/pages/armySearch/ListArmyPage";
@@ -15,8 +15,8 @@ const App: React.FC = () => {
             <React.Suspense fallback="Loading...">
                 <MantineProvider forceColorScheme={'dark'}>
                     <Routes>
-                        <Route path="/mordheimHelper/" element={<HomePage/>} />
-                        <Route path="/mordheimHelper/home" element={<HomePage/>} />
+                        <Route path="/" element={<HomePage/>} />
+                        <Route path="/mordheimHelper" element={<HomePage/>} />
                         <Route path="/mordheimHelper/list" element={<ListArmyPage/>} />
                         <Route path="/mordheimHelper/create/:idRace" element={<ArmyParentPage/>} />
                         <Route path="/mordheimHelper/edit/:idArmy" element={<ArmyParentPage/>} />
