@@ -8,7 +8,7 @@ import Layout from "@/pages/Layout";
 import './listArmyPage.css';
 import {supabase} from "@/createClient";
 
-export default function ListArmyPage() {
+export default function FleetListPage() {
     const navigate = useNavigate();
     const {playerArmies, setPlayerArmies} = useLocalStorageDataStore();
     const {appData} = useDataStore();
@@ -62,14 +62,15 @@ export default function ListArmyPage() {
     }
 
     return (
-      <Layout title={'WARBANDS'}>
+      <Layout title={'FLEETS'}>
         <div className={'list-army-page'}>
             <div className={'list-army-top-menu'}>
                 <div>Availables list : {playerArmies.length}</div>
                 <button className={'icon-button btn-plus'} onClick={() => setShowPopup(true)}><img src={'./assets/icons/icon_plus.svg'}/></button>
             </div>
             {showPopup && (
-                <ArmySelectModal title="Race selection" onClose={() => setShowPopup(false)} data={appData}/>)}
+                <ArmySelectModal title="Race selection" onClose={() => setShowPopup(false)} data={appData}/>
+            )}
 
             <div className="player-armies">
                 {playerArmies && playerArmies.map(army => (

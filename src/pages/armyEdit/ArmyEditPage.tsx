@@ -36,7 +36,7 @@ function ArmyEditPage(props: Props) {
     const [selectedPlayerUnit, setSelectedPlayerUnit] = useState<PlayerUnit>();
     const [playerArmy, setPlayerArmy] = useState<UserWarband>(defaultPlayerArmy);
     const navigate = useNavigate();
-    let unitType = ['heroes', 'henchmen'];
+    let unitType = ['capital', 'escort'];
 
     useEffect(() => {
         let raceId = props.raceId;
